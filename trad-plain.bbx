@@ -1,0 +1,103 @@
+\ProvidesFile{trad-plain.bbx}[2012/09/02]
+
+\RequireBibliographyStyle{numeric}
+
+\ExecuteBibliographyOptions{%
+ maxnames  =  99      , % set the maximum number of authors
+ sorting   =  nty     , % sorting name - title - year
+}
+
+
+
+% new commmands and settings
+\newcommand*{\volumenumberdelim}{} % delim between number and volume
+
+
+% Field formating
+\DeclareFieldFormat*{title}{#1}
+\DeclareFieldFormat[book,inbook,manual,phdthesis,proceedings]%
+                   {title}{\mkbibemph{#1}}
+
+\DeclareFieldFormat*{number}{\setunit{}\mkbibparens{#1}}
+
+% Seting the bibliography drivers:
+
+\DeclareBibliographyDriver{incollection}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \usebibmacro{maintitle+booktitle}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \usebibmacro{related}%
+  \usebibmacro{finentry}}
+
+
+
+\renewbibmacro*{byeditor+others}{%
+  \ifnameundef{editor}
+    {}
+    {%
+     \printnames[byeditor]{editor}%
+    \setunit{\addcomma\space}%
+    \printtext{%
+      \ifboolexpr{
+     test {\ifnumgreater{\value{editor}}{1}}
+     or
+     test {\ifandothers{editor}}
+         }%
+      {\biblstring{editors}}%
+      {\biblstring{editor}}}%
+         \clearname{editor}%
+    \newunit}%
+  \usebibmacro{byeditorx}%
+  \usebibmacro{bytranslator+others}
+}
+
+
+
+\newbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  \setunit*{\volumenumberdelim}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}%
+}
+
+
