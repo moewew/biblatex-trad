@@ -3,22 +3,32 @@
 \RequireBibliographyStyle{numeric}
 
 \ExecuteBibliographyOptions{%
- maxnames  =  99      , % set the maximum number of authors
- sorting   =  nty     , % sorting name - title - year
+ maxnames   =  99      , % set the maximum number of authors
+ sorting    =  nty     , % sorting name - title - year
+ dateabbrev =  false   , % no short form of dates
+ abbreviate =  false   ,
 }
 
 
 
-% new commmands and settings
+% new commmands and redefinitions
 \newcommand*{\volumenumberdelim}{} % delim between number and volume
-
+\renewcommand*{\intitlepunct}{\addspace} % after the bibstring in
 
 % Field formating
 \DeclareFieldFormat*{title}{#1}
 \DeclareFieldFormat[book,inbook,manual,phdthesis,proceedings]%
                    {title}{\mkbibemph{#1}}
 
-\DeclareFieldFormat*{number}{\setunit{}\mkbibparens{#1}}
+\DeclareFieldFormat*{number}{\mkbibparens{#1}}
+\DeclareFieldFormat[incollection]{number}{\biblclstring{number}~#1}
+
+\DeclareFieldFormat{edition}{%
+  \ifinteger{#1}
+    {\mkbibordedition{#1}~\biblstring{edition}}
+    {\MakeLowercase{#1}~\biblstring{edition}}}
+
+\DeclareFieldFormat{chapter}{\biblcstring{part}~#1}
 
 % Seting the bibliography drivers:
 
@@ -35,11 +45,9 @@
   \newunit\newblock
   \usebibmacro{in:}%
   \usebibmacro{byeditor+others}%
-  \newunit\newblock
+  \setunit{\addcomma\space}\newblock
   \usebibmacro{maintitle+booktitle}%
   \newunit\newblock
-  \printfield{edition}%
-  \newunit
   \iffieldundef{maintitle}
     {\printfield{volume}%
      \printfield{part}}
@@ -49,11 +57,9 @@
   \newunit\newblock
   \usebibmacro{series+number}%
   \newunit\newblock
-  \printfield{note}%
-  \newunit\newblock
-  \usebibmacro{publisher+location+date}%
-  \newunit\newblock
   \usebibmacro{chapter+pages}%
+  \newunit
+  \usebibmacro{publisher+location+date}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
     {\printfield{isbn}}
@@ -62,6 +68,8 @@
   \usebibmacro{doi+eprint+url}%
   \newunit\newblock
   \usebibmacro{addendum+pubstate}%
+  \newunit\newblock
+  \printfield{note}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
   \newunit\newblock
@@ -74,9 +82,18 @@
   \ifnameundef{editor}
     {}
     {%
-     \printnames[byeditor]{editor}%
+    \printnames[byeditor]{editor}%
     \setunit{\addcomma\space}%
-    \printtext{%
+    \usebibmacro{editorlstr}%
+    \clearname{editor}%
+    \newunit}%
+  \usebibmacro{byeditorx}%
+  \usebibmacro{bytranslator+others}
+}
+
+
+\newbibmacro*{editorlstr}{%
+\printtext{%
       \ifboolexpr{
      test {\ifnumgreater{\value{editor}}{1}}
      or
@@ -84,15 +101,16 @@
          }%
       {\biblstring{editors}}%
       {\biblstring{editor}}}%
-         \clearname{editor}%
-    \newunit}%
-  \usebibmacro{byeditorx}%
-  \usebibmacro{bytranslator+others}
 }
 
+\renewbibmacro*{series+number}{%
+  \printfield{number}%
+  \setunit*{\addspace}%
+  \printfield{series}%
+  \newunit}
 
 
-\newbibmacro*{volume+number+eid}{%
+\renewbibmacro*{volume+number+eid}{%
   \printfield{volume}%
   \setunit*{\volumenumberdelim}%
   \printfield{number}%
@@ -100,4 +118,15 @@
   \printfield{eid}%
 }
 
+\renewbibmacro*{publisher+location+date}{%
+  \printlist{publisher}%
+  \setunit*{\addcomma\space}%
+  \printlist{location}%
+  \setunit*{\addcomma\space}%
+  \newunit
+  \printfield{edition}%
+  \newunit
+  \usebibmacro{date}%
+  \newunit}
 
+\endinput
