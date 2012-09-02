@@ -14,6 +14,10 @@
 % new commmands and redefinitions
 \newcommand*{\volumenumberdelim}{} % delim between number and volume
 \renewcommand*{\intitlepunct}{\addspace} % after the bibstring in
+\renewcommand*{\newunitpunct}{\addperiod\space}
+\newcommand*{\newcommaunit}{\setunit{\addcomma\space}}
+\renewcommand*{\labelnamepunct}{\addperiod\space}
+\renewcommand*{\subtitlepunct}{\addperiod\space}
 
 % Field formating
 \DeclareFieldFormat*{title}{#1}
@@ -30,7 +34,44 @@
 
 \DeclareFieldFormat{chapter}{\biblcstring{part}~#1}
 
+\DeclareFieldFormat[article]{pages}{{#1}}
+
 % Seting the bibliography drivers:
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{bytranslator+others}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit\newblock
+  \usebibmacro{journal+issuetitle}%
+  \newunit
+  \usebibmacro{byeditor+others}%
+  \newunit
+  \usebibmacro{note+pages}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{issn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \usebibmacro{related}%
+  \usebibmacro{finentry}}
+
+
 
 \DeclareBibliographyDriver{incollection}{%
   \usebibmacro{bibindex}%
@@ -45,7 +86,7 @@
   \newunit\newblock
   \usebibmacro{in:}%
   \usebibmacro{byeditor+others}%
-  \setunit{\addcomma\space}\newblock
+  \newcommaunit\newblock
   \usebibmacro{maintitle+booktitle}%
   \newunit\newblock
   \iffieldundef{maintitle}
@@ -54,11 +95,11 @@
     {}%
   \newunit
   \printfield{volumes}%
-  \newunit\newblock
+  \newcommaunit\newblock
   \usebibmacro{series+number}%
-  \newunit\newblock
+  \newcommaunit\newblock
   \usebibmacro{chapter+pages}%
-  \newunit
+  \setunit{\addperiod\space}
   \usebibmacro{publisher+location+date}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
@@ -76,7 +117,31 @@
   \usebibmacro{related}%
   \usebibmacro{finentry}}
 
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addspace}%
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \usebibmacro{volume+number+pages+eid}%
+  \newcommaunit
+%  \setunit{\addspace}%
+  \usebibmacro{issue+date-parens}%
+  \setunit{\addcolon\space}%
+  \usebibmacro{issue}%
+  \newunit}
 
+\newbibmacro*{volume+number+pages+eid}{%
+  \printfield{volume}%
+  \setunit*{\volumenumberdelim}%
+  \printfield{number}%
+  \setunit{\addcolon}
+  \printfield{pages}%
+  \newcommaunit%
+  \printfield{eid}}%
+ 
 
 \renewbibmacro*{byeditor+others}{%
   \ifnameundef{editor}
@@ -106,6 +171,7 @@
 \renewbibmacro*{series+number}{%
   \printfield{number}%
   \setunit*{\addspace}%
+  \usebibmacro{in:}%
   \printfield{series}%
   \newunit}
 
@@ -123,10 +189,20 @@
   \setunit*{\addcomma\space}%
   \printlist{location}%
   \setunit*{\addcomma\space}%
-  \newunit
+  \newcommaunit
   \printfield{edition}%
-  \newunit
+  \newcommaunit
   \usebibmacro{date}%
+  \newunit}
+
+
+\newbibmacro*{issue+date-parens}{%
+  \printtext{%
+    \iffieldundef{issue}
+      {\usebibmacro{date}}
+      {\printfield{issue}%
+       \setunit*{\addspace}%
+       \usebibmacro{date}}}%
   \newunit}
 
 \endinput
