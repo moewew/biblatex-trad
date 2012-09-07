@@ -1,0 +1,133 @@
+\documentclass{ltxdockit}[2011/03/25]
+\usepackage{btxdockit}
+\usepackage[utf8]{inputenc}
+\usepackage[american]{babel}
+\usepackage[strict]{csquotes}
+\usepackage{shortvrb}
+\usepackage{pifont}
+\usepackage{libertine}
+\usepackage[scaled=0.8]{beramono}
+\usepackage{microtype}
+\lstset{basicstyle=\ttfamily,keepspaces=true}
+\KOMAoptions{numbers=noenddot}
+\addtokomafont{paragraph}{\spotcolor}
+\addtokomafont{section}{\spotcolor}
+\addtokomafont{subsection}{\spotcolor}
+\addtokomafont{subsubsection}{\spotcolor}
+\addtokomafont{descriptionlabel}{\spotcolor}
+\pretocmd{\cmd}{\sloppy}{}{}
+\pretocmd{\bibfield}{\sloppy}{}{}
+\pretocmd{\bibtype}{\sloppy}{}{}
+
+
+\MakeAutoQuote*{<}{>}
+\MakeShortVerb{\|}
+
+\newcommand*{\biber}{Biber\xspace}
+
+\titlepage{%
+  title={The \sty{biblatex-trad} Package},
+  subtitle={Traditional bibliography styles for \sty{biblatex}},
+  url={},
+  author={Marco Daniel},
+  email={},
+  revision={0.1},
+  date={09/2012}}
+
+\hypersetup{%
+  pdftitle={The biblatex-trad Package},
+  pdfsubject={Traditional bibliography styles for biblatex},
+  pdfauthor={Marco Daniel},
+  pdfkeywords={tex, latex, bibtex, bibliography, references, citation}}
+
+
+\newrobustcmd*{\Deprecated}{%
+  \textcolor{spot}{\margnotefont Deprecated}}
+\newrobustcmd*{\DeprecatedMark}{%
+  \leavevmode\marginpar{\Deprecated}}
+\newrobustcmd*{\BiberOnly}{%
+  \textcolor{spot}{\margnotefont Biber only}}
+\newrobustcmd*{\BiberOnlyMark}{%
+  \leavevmode\marginpar{\BiberOnly}}
+\newrobustcmd*{\BibTeXOnly}{%
+  \textcolor{spot}{\margnotefont BibTeX only}}
+\newrobustcmd*{\BibTeXOnlyMark}{%
+  \leavevmode\marginpar{\BibTeXOnly}}
+
+\hyphenation{%
+  star-red
+  bib-lio-gra-phy
+  white-space
+}
+
+\begin{document}
+
+\printtitlepage
+\tableofcontents
+
+
+\section{Introduction}\label{sec:int}
+
+The package \sty{biblatex-trad} is a contribution to the great package \sty{biblatex}. 
+
+It provides the implementation of the traditional bibliography styles (\sty{plain},
+\sty{unsrt}, \sty{alpha} and \sty{abbrv}) as a style for \sty{biblatex}.
+
+\subsection{Motivation}\label{subsec:int:mot}
+
+The package is motivated by a question at \tex-\latex Stack Exchange \glqq \href{http://tex.stackexchange.com/}{How to emulate the traditional BibTeX styles (plain, abbrv, unsrt, alpha) as closely as possible with biblatex?}
+
+\subsection{Requirements}
+
+The usage of the styles requires \sty{biblatex} 2.0 or newer.
+
+\subsection{License}
+
+Copyright \textcopyright\ 2006--2012 Marco Daniel. Permission is granted to copy, distribute and\slash or modify this software under the terms of the \lppl, version 1.3.\fnurl{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
+
+
+\subsection{Feedback}\label{subsec:int:feb}
+
+Please use the \sty{biblatex-trad} project page on GitHub to report bugs and submit feature requests.\fnurl{https://github.com/marcodaniel/trad-biblatex}
+
+If you do not want to report a bug or request a feature but are simply in need of assistance, you might want to consider posting your question on the \texttt{comp.text.tex} newsgroup or \tex-\latex Stack Exchange.\fnurl{http://tex.stackexchange.com/questions/tagged/biblatex}
+
+\section{Usage}
+
+\sty{biblatex-trad} isn't a standalone package. As described in \secref{sec:int} it's
+a small collection of styles. So you can load the styles as follows:
+
+\begin{lstlisting}[style=latex]{}
+\usepackage[style=XXX]{biblatex}
+\end{lstlisting}
+The available styles are listet below.
+\begin{marglist}
+
+\item[trad-plain] Implementation of the standard style \sty{plain}
+\item[trad-unsrt] Implementation of the standard style \sty{unsrt}
+\item[trad-alpha] \BiberOnlyMark  Implementation of the standard style \sty{alpha}
+\item[trad-abbrv]  Implementation of the standard style \sty{abbrv}
+
+\end{marglist}
+
+After loading the style you can use all options provided by the package \sty{biblatex}.
+
+\section{Limitation}
+
+Up to know the package only setup the entry types \bibtype{BOOK}, \bibtype{ARTICLE} and
+\bibtype{INCOLLECTION}.
+
+\section{Revision History}
+\label{apx:log}
+
+\begin{changelog}
+
+\begin{release}{0.1}{2012-09-07}
+\item First upload
+\end{release}
+
+\end{changelog}
+\end{document}
+
+\endinput
+
