@@ -36,6 +36,8 @@
 
 \DeclareFieldFormat[article]{pages}{{#1}}
 
+\DeclareFieldFormat[book]{series}{\mkbibemph{#1}}
+
 % Seting the bibliography drivers:
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
@@ -84,12 +86,7 @@
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newunit\newblock
-  \usebibmacro{series+number}%
-  \newunit
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
+  \usebibmacro{book:series+number}%
   \newunit
   \printfield{volumes}%
   \newunit\newblock
@@ -217,6 +214,17 @@
   \printfield{series}%
   \newunit}
 
+\newbibmacro*{book:series+number}{%
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \printfield{number}%
+  \setunit*{\addspace}%
+  \iffieldundef{series}{}%
+  {\space\bibstring{ofseries}\space\printfield{series}}%
+  \newunit
+}
 
 \renewbibmacro*{volume+number+eid}{%
   \printfield{volume}%
