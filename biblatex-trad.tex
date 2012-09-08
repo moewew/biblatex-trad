@@ -1,3 +1,9 @@
+% TEX root = path/to/root_file.tex
+% !TEX program = arara
+% !TEX encoding = utf8
+% !TEX spellcheck = en_GB
+% arara: pdflatex: {synctex: true}
+%: Start Header
 \documentclass{ltxdockit}[2011/03/25]
 \usepackage{btxdockit}
 \usepackage[utf8]{inputenc}
@@ -23,14 +29,14 @@
 \MakeAutoQuote*{<}{>}
 \MakeShortVerb{\|}
 
-\newcommand*{\biber}{Biber\xspace}
 
+\newcommand*{\biber}{Biber\xspace}
 \titlepage{%
   title={The \sty{biblatex-trad} Package},
   subtitle={Traditional bibliography styles for \sty{biblatex}},
   url={},
   author={Marco Daniel},
-  email={},
+  email={marco.daniel@mada-nada.de},
   revision={0.1},
   date={09/2012}}
 
@@ -114,8 +120,8 @@ After loading the style you can use all options provided by the package \sty{bib
 
 \section{Limitation}
 
-Up to know the package only setup the entry types \bibtype{BOOK}, \bibtype{ARTICLE} and
-\bibtype{INCOLLECTION}.
+Up to know the entry types \bibtype{BOOK}, \bibtype{ARTICLE} and \bibtype{INCOLLECTION} are
+setup.
 
 \section{Revision History}
 \label{apx:log}
