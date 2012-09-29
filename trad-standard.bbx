@@ -261,11 +261,11 @@
 
 \newbibmacro*{issue+date-parens}{%
   \printtext{%
-    \iffieldundef{issue}
-      {\usebibmacro{date}}
+    \iffieldundef{issue}%
+      {\usebibmacro{date}}%
       {\printfield{issue}%
-       \setunit*{\addspace}%
-       \usebibmacro{date}}}%
-  \newunit}
+       \setunit*{\addcomma\space}%
+       \usebibmacro{date}}%
+   }\newunit}
 
 \endinput
