@@ -11,7 +11,7 @@
 \usepackage[strict]{csquotes}
 \usepackage{shortvrb}
 \usepackage{pifont}
-\usepackage{libertine}
+\usepackage{libertine-type1}
 \usepackage[scaled=0.8]{beramono}
 \usepackage{microtype}
 \lstset{basicstyle=\ttfamily,keepspaces=true}
@@ -37,8 +37,8 @@
   url={},
   author={Marco Daniel},
   email={marco.daniel@mada-nada.de},
-  revision={0.1},
-  date={9. Sep 2012}}
+  revision={0.2},
+  date={29. Sep 2012}}
 
 \hypersetup{%
   pdftitle={The biblatex-trad Package},
@@ -126,7 +126,17 @@ setup.
 \section{Revision History}
 \label{apx:log}
 
+
 \begin{changelog}
+
+\begin{release}{0.2}{2012-09-29}
+\item fixed missing comma after journal name if journal name has a period
+\item make titles sentence case
+\item removed extra \emph{in}
+\item removed extra \cmd{printfield}
+\item fixed extra comma if \bibtype{article} doesn't have a year
+\item use package \sty{libertine-type1} for documentation
+\end{release}
 
 \begin{release}{0.1}{2012-09-09}
 \item First upload
