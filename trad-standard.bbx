@@ -219,8 +219,11 @@
 \renewbibmacro*{series+number}{%
   \printfield{number}%
   \setunit*{\addspace}%
-  \usebibmacro{in:}%
-  \printfield{series}%
+  \iffieldundef{series}{}%
+   {
+    \usebibmacro{in:}%
+    \printfield{series}%
+   }%
   \newunit}
 
 \newbibmacro*{book:series+number}{%
