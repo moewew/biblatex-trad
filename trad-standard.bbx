@@ -25,9 +25,9 @@
 \renewcommand*{\subtitlepunct}{\addperiod\space}
 
 % Field formating
-\DeclareFieldFormat*{title}{\MakeSentenceCase*{#1}}
+\DeclareFieldFormat*{title}{#1}
 \DeclareFieldFormat[book,inbook,manual,phdthesis,proceedings]%
-                   {title}{\mkbibemph{\MakeSentenceCase*{#1}}}
+                   {title}{\mkbibemph{#1}}
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
 \DeclareFieldFormat[incollection]{number}{\biblclstring{number}~#1}
