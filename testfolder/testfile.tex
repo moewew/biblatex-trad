@@ -1,0 +1,90 @@
+% TEX root = path/to/root_file.tex
+% !TEX program = arara
+% !TEX encoding = utf8
+% !TEX spellcheck = en_GB
+% arara: pdflatex: {draft: true}
+% arara: biber
+% arara: pdflatex: {synctex: true}
+% arara: pdflatex: {synctex: true}
+%: Start Header
+\RequirePackage{filecontents}
+\begin{filecontents}{references.bib}
+@article{A+01,
+  author = {Author, Aa and Buthor, Bb and Cuthor, Cc and Duthor, Dd},
+  title = {Title of Article},
+  journal = {SIAM J. Comput},
+  year = {2001},
+  volume = {1},
+  number = {2},
+  pages = {101--109},
+  month = jan,
+  note = {This is an article entry},
+}
+@book{A+02,
+  author = {Author, Aa and Buthor, Bb and Cuthor, Cc and Duthor, Dd},
+  title = {Title},
+  volume ={1},
+  series = {Series},
+  publisher = {Publisher},
+  address = {Location},
+  edition = {First},
+  month = "jan",
+  year = {2002},
+  note = {This is a book entry}
+}
+@incollection{A+03,
+  author = {Author, Aa and Buthor, Bb and Cuthor, Cc and Duthor, Dd},
+  title = {Title},
+  editor = {Zuthor, Zz and Yuthor, Yy and Xuthor, Xx and Wuthor, Ww},
+  booktitle = {Book title Book Title},
+  number = {1},
+  series = {Series},
+  chapter = {2},
+  type = {Part},
+  pages = {101--109},
+  publisher = {Publisher},
+  address = {Location},
+  edition ={First},
+  month = jan,
+  year = {2003},
+  note = {This is an incollection entry},
+}
+
+@incollection{kohayakawa2,
+author={Y. Kohayakawa},
+title={{Szemer\'{e}di's} regularity lemma for sparse graphs},
+booktitle={Foundations of Computational Mathematics},
+editor={F. Cucker and M. Shub},
+pages={216--230},
+publisher=springer,
+year={1997}
+}
+
+@article{mmexperiments,
+author={Siddhartha Chatterjee and  Alvin R. Lebeck and  Praveen K. Patnala and Mithuna Thottethodi},
+title={Recursive array layouts and fast matrix multiplication},
+journal={IEEE Trans. on Parallel and Distributed Systems},
+volume={13},
+issue={11},
+pages={1105--1123},
+year= {2002},
+doi={10.1109/TPDS.2002.1058095}
+}
+
+\end{filecontents}
+
+
+
+\documentclass{article}
+\providecommand\noopsort[1]{}
+\usepackage{xpatch}
+\usepackage[%
+ backend   =  biber   , 
+ style     = trad-alpha,
+]{biblatex}
+\addbibresource{references.bib}
+
+\begin{document}
+\nocite{*}
+\printbibliography
+\end{document}
