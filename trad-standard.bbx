@@ -177,7 +177,7 @@
   \newcommaunit
 %  \setunit{\addspace}%
   \usebibmacro{issue+date-parens}%
-  \setunit{\addcolon\space}%
+  \setunit*{\addcolon\space}%
   \usebibmacro{issue}%
   \newunit}
 
@@ -260,12 +260,13 @@
 
 
 \newbibmacro*{issue+date-parens}{%
-  \printtext{%
-    \iffieldundef{issue}%
-      {\usebibmacro{date}}%
-      {\printfield{issue}%
-       \setunit*{\addcomma\space}%
-       \usebibmacro{date}}%
-   }\newunit}
+  \iffieldundef{issue}%
+    {\usebibmacro{date}}%
+    {\printfield{issue}%
+     \setunit*{\addcomma\space}%
+     \usebibmacro{date}%
+    }%
+  \newunit}
+
 
 \endinput
