@@ -91,6 +91,12 @@ localinstall:
 ################################################################
 ## maintainer tool
 ################################################################
+changedate:
+	@echo 
+	@echo -e "$(WARN_COLOR)Ausführung des Skriptes datechange.py"
+	@python datechange.py 
+	@echo -e "$(OK_COLOR)Done$(NO_COLOR)"
+
 usectanify:
 	echo  "" ;\
 	echo -e "\t$(ERROR_COLOR)Start ctanify$(NO_COLOR)" ;\
