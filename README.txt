@@ -4,7 +4,7 @@ biblatex.
 
 ================================================================
 The current development is available at github:
-https://github.com/marcodaniel/mdframed
+https://github.com/marcodaniel/trad-biblatex
 
 ================================================================
 Copyright (c) 2012 Marco Daniel
