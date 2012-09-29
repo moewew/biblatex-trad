@@ -25,9 +25,9 @@
 \renewcommand*{\subtitlepunct}{\addperiod\space}
 
 % Field formating
-\DeclareFieldFormat*{title}{#1}
+\DeclareFieldFormat*{title}{\MakeSentenceCase*{#1}}
 \DeclareFieldFormat[book,inbook,manual,phdthesis,proceedings]%
-                   {title}{\mkbibemph{#1}}
+                   {title}{\mkbibemph{\MakeSentenceCase*{#1}}}
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
 \DeclareFieldFormat[incollection]{number}{\biblclstring{number}~#1}
@@ -44,6 +44,8 @@
 \DeclareFieldFormat[book]{series}{\mkbibemph{#1}}
 
 \DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
+
+\DeclareFieldFormat*{titlecase}{\MakeSentenceCase{#1}}
 
 % Seting the bibliography drivers:
 \DeclareBibliographyDriver{article}{%
