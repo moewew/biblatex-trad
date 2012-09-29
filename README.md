@@ -1,7 +1,7 @@
 trad-biblatex
 =============
 
-traditional bibliography styles with `biblatex`
+traditional bibliography styles with [`biblatex`](http://www.ctan.org/pkg/biblatex)
 
 Introduction
 -------------
