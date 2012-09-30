@@ -116,11 +116,27 @@ eprinttype = {mathscinet},
   year      = {1984}
 }
 
+@INPROCEEDINGS{inproceedings-full,
+   author = "Alfred V. Oaho and Jeffrey D. Ullman and Mihalis Yannakakis",
+   title = "On Notions of Information Transfer in {VLSI} Circuits",
+   editor = "Wizard V. Oz and Mihalis Yannakakis",
+   booktitle = "Proc. Fifteenth Annual ACM" # STOC,
+   number = 17,
+   series = "All ACM Conferences",
+   pages = "133--139",
+   month = mar,
+   year = 1983,
+   address = "Boston",
+   organization = ACM,
+   publisher = "Academic Press",
+   note = "This is a full INPROCEDINGS entry",
+}
+
 \end{filecontents}
 
 \documentclass{article}
 \providecommand\noopsort[1]{}
-\usepackage{xpatch}
+\usepackage{graphicx}
 \usepackage[%
  backend   =  biber   , 
  style     = trad-plain,
@@ -131,7 +147,11 @@ eprinttype = {mathscinet},
 \addbibresource{references.bib}
 
 \begin{document}
-%\cite{Pan}
-\nocite{*}
+%\subsection*{original}
+%\noindent\includegraphics{output-inproceedings-full}
+
+%\subsection*{trad-plain}
+\cite{inproceedings-full}
+%\nocite{*}
 \printbibliography
 \end{document}
