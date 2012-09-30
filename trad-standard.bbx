@@ -39,7 +39,7 @@
                    {title}{\mkbibemph{#1}}
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
-\DeclareFieldFormat[incollection]{number}{\biblclstring{number}~#1}
+\DeclareFieldFormat[incollection,inproceedings]{number}{\biblclstring{number}~#1}
 \DeclareFieldFormat{edition}{%
   \ifinteger{#1}
     {\mkbibordedition{#1}~\bibstring{edition}}
@@ -198,11 +198,11 @@
   \usebibmacro{byauthor}%
   \newunit\newblock
   \usebibmacro{in:}%
+  \usebibmacro{byeditor+others}%
+  \newcommaunit\newblock
   \usebibmacro{maintitle+booktitle}%
   \newunit\newblock
   \usebibmacro{event+venue+date}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
   \newunit\newblock
   \iffieldundef{maintitle}
     {\printfield{volume}%
@@ -210,16 +210,14 @@
     {}%
   \newunit
   \printfield{volumes}%
-  \newunit\newblock
+  \newcommaunit\newblock
   \usebibmacro{series+number}%
   \newunit\newblock
-  \printfield{note}%
-  \newunit\newblock
   \printlist{organization}%
-  \newunit
-  \usebibmacro{publisher+location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
+  \newcommaunit
+  \usebibmacro{location+date+publisher}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
     {\printfield{isbn}}
@@ -228,6 +226,8 @@
   \usebibmacro{doi+eprint+url}%
   \newunit\newblock
   \usebibmacro{addendum+pubstate}%
+  \newunit\newblock
+  \printfield{note}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
   \newunit\newblock
@@ -299,6 +299,8 @@
    }%
   \newunit}
 
+
+
 \newbibmacro*{book:series+number}{%
   \iffieldundef{maintitle}
     {\printfield{volume}%
@@ -330,7 +332,16 @@
   \usebibmacro{date}%
   \newunit}
 
-
+\newbibmacro*{location+date+publisher}{%
+  \printlist{location}%
+  \setunit*{\addcomma\space}%
+  \newcommaunit
+  \printfield{edition}%
+  \newcommaunit
+  \usebibmacro{date}%
+  \newunit
+  \printlist{publisher}%
+  }
 
 \newbibmacro*{issue+date-parens}{%
   \iffieldundef{issue}%
