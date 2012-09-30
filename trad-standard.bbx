@@ -4,18 +4,25 @@
 %%  Public License, as described in lppl.txt in the base LaTeX distribution.
 %%  Either version 1.0 or, at your option, any later version.
 \ProvidesFile{trad-standard.bbx}[2012/09/29]
-
+%==========================================%
+%==========================================%
+%==========================================%
 \RequireBibliographyStyle{standard}
-
+%==========================================%
+%==========================================%
+%==========================================%
 \providebool{bbx:subentry}
-
 \DeclareBibliographyOption{subentry}[true]{%
   \setbool{bbx:subentry}{#1}}
-
+%==========================================%
+%==========================================%
+%==========================================%
 \DeclareNameAlias{author}{default}
 \DeclareNameAlias{editor}{default}
 \DeclareNameAlias{translator}{default}
-
+%==========================================%
+%==========================================%
+%==========================================%
 % new commmands and redefinitions
 \newcommand*{\volumenumberdelim}{} % delim between number and volume
 \renewcommand*{\intitlepunct}{\addspace} % after the bibstring in
@@ -23,7 +30,9 @@
 \newcommand*{\newcommaunit}{\setunit{\addcomma\space}}
 \renewcommand*{\labelnamepunct}{\addperiod\space}
 \renewcommand*{\subtitlepunct}{\addperiod\space}
-
+%==========================================%
+%==========================================%
+%==========================================%
 % Field formating
 \DeclareFieldFormat*{title}{#1}
 \DeclareFieldFormat[book,inbook,manual,phdthesis,proceedings]%
@@ -31,20 +40,14 @@
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
 \DeclareFieldFormat[incollection]{number}{\biblclstring{number}~#1}
-
 \DeclareFieldFormat{edition}{%
   \ifinteger{#1}
     {\mkbibordedition{#1}~\bibstring{edition}}
     {\MakeLowercase{#1}~\bibstring{edition}}}
-
 \DeclareFieldFormat{chapter}{\biblcstring{part}~#1}
-
 \DeclareFieldFormat[article]{pages}{{#1}}
-
 \DeclareFieldFormat[book]{series}{\mkbibemph{#1}}
-
 \DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
-
 \DeclareFieldFormat{titlecase}{\MakeTitleCase{#1}}
 
 \newrobustcmd{\MakeTitleCase}[1]{%
@@ -62,7 +65,9 @@
     \OR\ifentrytype{report}\OR\ifentrytype{thesis}}
     {#1}
     {\MakeSentenceCase{#1}}}
-
+%==========================================%
+%==========================================%
+%==========================================%
 % Seting the bibliography drivers:
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
@@ -181,6 +186,58 @@
   \usebibmacro{related}%
   \usebibmacro{finentry}}
 
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{maintitle+booktitle}%
+  \newunit\newblock
+  \usebibmacro{event+venue+date}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \printlist{organization}%
+  \newunit
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \usebibmacro{related}%
+  \usebibmacro{finentry}}
+
+%==========================================%
+%==========================================%
+%==========================================%
+%new-/redefinition of bibmacros
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
   \setunit*{\addcomma\space}%
