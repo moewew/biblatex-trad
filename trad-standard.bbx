@@ -27,7 +27,9 @@
 \newcommand*{\volumenumberdelim}{} % delim between number and volume
 \renewcommand*{\intitlepunct}{\addspace} % after the bibstring in
 \renewcommand*{\newunitpunct}{\addperiod\space}
-\newcommand*{\newcommaunit}{\setunit{\addcomma\space}}
+\newcommand*{\newcommaunit}{\@ifstar\newcommaunitStar\newcommaunitNoStar}
+\newcommand*{\newcommaunitStar}{\setunit*{\addcomma\space}}
+\newcommand*{\newcommaunitNoStar}{\setunit{\addcomma\space}}
 \renewcommand*{\labelnamepunct}{\addperiod\space}
 \renewcommand*{\subtitlepunct}{\addperiod\space}
 %==========================================%
@@ -198,26 +200,39 @@
   \usebibmacro{byauthor}%
   \newunit\newblock
   \usebibmacro{in:}%
-  \usebibmacro{byeditor+others}%
-  \newcommaunit\newblock
+  \ifthenelse{\ifnameundef{editor} \and \ifnameundef{editora} \and
+    \ifnameundef{editorb} \and \ifnameundef{editorc} \and
+    \ifnameundef{translator}}
+  {\setunit{\addspace}}
+  {\usebibmacro{byeditor+others}\newcommaunit}
   \usebibmacro{maintitle+booktitle}%
-  \newunit\newblock
-  \usebibmacro{event+venue+date}%
-  \newunit\newblock
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
   \newunit
-  \printfield{volumes}%
-  \newcommaunit\newblock
+  \usebibmacro{event+venue+date}%
+  \newcommaunit
+  \iffieldundef{maintitle}%
+    {\printfield{volume}%
+     \printfield{part}%
+     \newcommaunit%
+     \printfield{volumes}%
+     \ifthenelse{\iffieldundef{volume} \and \iffieldundef{part} \and
+       \iffieldundef{volumes}}
+     {\newcommaunit}
+     {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
+    {}%
   \usebibmacro{series+number}%
-  \newunit\newblock
-  \printlist{organization}%
-  \newunit\newblock
+  \newcommaunit
   \usebibmacro{chapter+pages}%
   \newcommaunit
-  \usebibmacro{location+date+publisher}%
+  \printlist{location}%
+  \setunit*{\addcomma\space}%
+  \newcommaunit
+  \printfield{edition}%
+  \newcommaunit
+  \usebibmacro{date}%
+  \newunit
+  \printlist{organization}%
+  \newcommaunit*
+  \printlist{publisher}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
     {\printfield{isbn}}
@@ -225,9 +240,9 @@
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
   \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \newunit\newblock
   \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
   \newunit\newblock
@@ -291,13 +306,9 @@
 
 \renewbibmacro*{series+number}{%
   \printfield{number}%
-  \setunit*{\addspace}%
-  \iffieldundef{series}{}%
-   {
-    \usebibmacro{in:}%
-    \printfield{series}%
-   }%
-  \newunit}
+  \setunit*{\addspace\bibstring{inseries}\addspace}%
+  \printfield{series}%
+}
 
 
 
