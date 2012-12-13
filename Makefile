@@ -15,7 +15,7 @@ S_UNSRT   = trad-unsrt
 S_ALPHA   = trad-alpha
 S_ABBRV   = trad-abbrv
 S_STAND   = trad-standard
-S_LIST    = $(S_PLAIN) $(S_UNSRT) $(S_ALPHA) $(S_UNSRT) $(S_STAND)
+S_LIST    = $(S_PLAIN) $(S_UNSRT) $(S_ALPHA) $(S_ABBRV) $(S_STAND)
 FILELIST  = $(S_LIST) $(PACKAGE)
 AUXFILES  = aux dtxe glo glolog gls hd ins idx idxlog ilg ind log lot out ps thm tmp toc xdv
 ################################################################
