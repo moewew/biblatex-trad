@@ -448,14 +448,13 @@
 
 
 \newbibmacro*{editorlstr}{%
-\printtext{%
-      \ifboolexpr{
-     test {\ifnumgreater{\value{editor}}{1}}
-     or
-     test {\ifandothers{editor}}
-         }%
-      {\biblstring{editors}}%
-      {\biblstring{editor}}}%
+  \ifboolexpr{
+    test {\ifnumgreater{\value{editor}}{1}}
+    or
+    test {\ifandothers{editor}}
+  }%
+             {\biblstring{editors}}%
+             {\biblstring{editor}}%
 }
 
 \renewbibmacro*{series+number}{%
