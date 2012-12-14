@@ -14,6 +14,11 @@
 \providebool{bbx:subentry}
 \DeclareBibliographyOption{subentry}[true]{%
   \setbool{bbx:subentry}{#1}}
+\newbool{bbxtrad:doisequal}
+\newbool{bbxtrad:eprintsequal}
+\newbool{bbxtrad:urlsequal}
+\newbool{bbxtrad:notesequal}
+\newbool{bbxtrad:addendumsequal}
 %==========================================%
 %==========================================%
 %==========================================%
@@ -200,28 +205,108 @@
   \usebibmacro{byauthor}%
   \newunit\newblock
   \usebibmacro{in:}%
-  \ifthenelse{\ifnameundef{editor} \and \ifnameundef{editora} \and
-    \ifnameundef{editorb} \and \ifnameundef{editorc} \and
-    \ifnameundef{translator}}
-  {\setunit{\addspace}}
+  \iffieldundef{crossref}
+    {\usebibmacro{inproc:crossref:full}}
+    {\usebibmacro{crossref:label}}
+  \usebibmacro{chapter+pages}%
+  \iffieldundef{crossref}
+    {\usebibmacro{inproc:crossref:extra}}
+    {\usebibmacro{inproc:crossref:conditional}}
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \usebibmacro{related}%
+  \usebibmacro{finentry}}
+
+%==========================================%
+%==========================================%
+%==========================================%
+%new-/redefinition of bibmacros
+\newbibmacro*{crossref:label}{%
+  \usebibmacro{maintitle+booktitle:noemph}%
+  \setunit{\addspace}
+  \entrydata
+  {\strfield{crossref}}
+  {\printtext{\mkbibbrackets{\printfield{labelnumber}}}}}
+
+\newbibmacro*{maintitle+booktitle:noemph}{%
+  \iffieldundef{maintitle}
+  {}
+  {\usebibmacro{maintitle:noemph}%
+    \newunit\newblock
+    \iffieldundef{volume}
+    {}
+    {\printfield{volume}%
+      \printfield{part}%
+      \setunit{\addcolon\space}}}%
+  \usebibmacro{booktitle:noemph}%
+  \newunit}
+
+\newbibmacro*{maintitle:noemph}{%
+  \ifboolexpr{
+    test {\iffieldundef{maintitle}}
+    and
+    test {\iffieldundef{mainsubtitle}}
+  }
+  {}
+  {\printtext{%
+      \printfield[titlecase]{maintitle}%
+      \setunit{\subtitlepunct}%
+      \printfield[titlecase]{mainsubtitle}}%
+    \newunit}%
+  \printfield{maintitleaddon}}
+
+\newbibmacro*{booktitle:noemph}{%
+  \ifboolexpr{
+    test {\iffieldundef{booktitle}}
+    and
+    test {\iffieldundef{booksubtitle}}
+  }
+  {}
+  {\printtext{%
+      \printfield[titlecase]{booktitle}%
+      \setunit{\subtitlepunct}%
+      \printfield[titlecase]{booksubtitle}}%
+    \newunit}%
+  \printfield{booktitleaddon}}
+
+\newbibmacro*{inproc:crossref:full}{%
+  \ifboolexpr{
+    test {\ifnameundef{editor}}
+    and
+    test {\ifnameundef{editora}}
+    and
+    test {\ifnameundef{editorb}}
+    and
+    test {\ifnameundef{editorc}}
+    and
+    test {\ifnameundef{translator}}
+  }
+  {\intitlepunct}
   {\usebibmacro{byeditor+others}\newcommaunit}
   \usebibmacro{maintitle+booktitle}%
   \newunit
   \usebibmacro{event+venue+date}%
   \newcommaunit
   \iffieldundef{maintitle}%
-    {\printfield{volume}%
-     \printfield{part}%
-     \newcommaunit%
-     \printfield{volumes}%
-     \ifthenelse{\iffieldundef{volume} \and \iffieldundef{part} \and
-       \iffieldundef{volumes}}
-     {\newcommaunit}
-     {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
-    {}%
+  {\printfield{volume}%
+    \printfield{part}%
+    \newcommaunit%
+    \printfield{volumes}%
+    \ifboolexpr{
+      test {\iffieldundef{volume}}
+      and
+      test {\iffieldundef{part}}
+      and
+      test {\iffieldundef{volumes}}
+    }
+    {\newcommaunit}
+    {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
+  {}%
   \usebibmacro{series+number}%
-  \newcommaunit
-  \usebibmacro{chapter+pages}%
+  \newcommaunit}
+
+\newbibmacro*{inproc:crossref:extra}{%
   \newcommaunit
   \printlist{location}%
   \setunit*{\addcomma\space}%
@@ -235,24 +320,51 @@
   \printlist{publisher}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
-    {\printfield{isbn}}
-    {}%
+  {\printfield{isbn}}
+  {}%
   \newunit\newblock
-  \usebibmacro{doi+eprint+url}%
+  \usebibmacro{doi+eprint+url}
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \setunit{\bibpagerefpunct}\newblock
-  \usebibmacro{pageref}%
+  \printfield{addendum}%
   \newunit\newblock
-  \usebibmacro{related}%
-  \usebibmacro{finentry}}
+  \printfield{pubstate}}
 
-%==========================================%
-%==========================================%
-%==========================================%
-%new-/redefinition of bibmacros
+\newbibmacro*{inproc:crossref:conditional}{%
+  \entrydata*{\strfield{crossref}}{
+    \iffieldsequal{doi}{saveddoi}
+    {\global\booltrue{bbxtrad:doisequal}}
+    {\global\boolfalse{bbxtrad:doisequal}}
+    \iffieldsequal{eprint}{savedeprint}
+    {\global\booltrue{bbxtrad:eprintsequal}}
+    {\global\boolfalse{bbxtrad:eprintsequal}}
+    \iffieldsequal{url}{savedurl}
+    {\global\booltrue{bbxtrad:urlsequal}}
+    {\global\boolfalse{bbxtrad:urlsequal}}
+    \iffieldsequal{note}{savednote}
+    {\global\booltrue{bbxtrad:notesequal}}
+    {\global\boolfalse{bbxtrad:notesequal}}
+    \iffieldsequal{addendum}{savedaddendum}
+    {\global\booltrue{bbxtrad:addendumsequal}}
+    {\global\boolfalse{bbxtrad:addendumsequal}}}
+  \newunit\newblock
+  \iftoggle{bbx:doi}
+  {\ifbool{bbxtrad:doisequal}{}{\printfield{saveddoi}}}
+  {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+  {\ifbool{bbxtrad:eprintsequal}{}{\usebibmacro{eprint}}}
+  {}%
+  \newunit\newblock
+  \iftoggle{bbx:url}
+  {\ifbool{bbxtrad:urlsequal}{}{\usebibmacro{url+urldate}}}
+  {}%
+  \newunit\newblock
+  \ifbool{bbxtrad:notesequal}{}{\printfield{note}}%
+  \newunit\newblock
+  \ifbool{bbxtrad:addendumsequal}{}{\printfield{addendum}}}
+
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
   \setunit*{\addcomma\space}%
