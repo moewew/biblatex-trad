@@ -51,9 +51,9 @@
   \ifinteger{#1}
     {\mkbibordedition{#1}~\bibstring{edition}}
     {\MakeLowercase{#1}~\bibstring{edition}}}
-\DeclareFieldFormat{chapter}{\biblcstring{part}~#1}
+\DeclareFieldFormat{chapter}{\bibstring{part}~#1}
 \DeclareFieldFormat[article]{pages}{{#1}}
-\DeclareFieldFormat[book]{series}{\mkbibemph{#1}}
+\DeclareFieldFormat[book,inproceedings,proceedings]{series}{\mkbibemph{#1}}
 \DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
 \DeclareFieldFormat{titlecase}{\MakeTitleCase{#1}}
 
@@ -118,15 +118,22 @@
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
-  \newunit\newblock
+  \newunit
   \usebibmacro{byauthor}%
-  \newunit\newblock
+  \newunit
   \usebibmacro{byeditor+others}%
-  \newcommaunit\newblock
+  \newcommaunit
   \usebibmacro{book:series+number}%
   \newunit
   \printfield{volumes}%
-  \newunit\newblock
+  \newunit
+  \ifboolexpr{
+    test {\iffieldundef{volume}}
+    and
+    test {\iffieldundef{part}}
+    and
+    test {\iffieldundef{number}}
+  }{}{\newblock}%
   \usebibmacro{publisher+location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
@@ -226,21 +233,39 @@
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
-  \newunit\newblock
-  \usebibmacro{event+venue+date}%
-  \newunit\newblock
-  \usebibmacro{byeditor+others}%
-  \newcommaunit\newblock
-  \usebibmacro{proc:series+number}%
   \newunit
-  \printfield{volumes}%
-  \newunit\newblock
-  \printlist{organization}%
-  \iflistundef{organization}
+  \ifboolexpr{
+    test {\iffieldundef{venue}}
+    and
+    test {\iffieldundef{eventtitle}}
+    and
+    test {\iffieldundef{eventyear}}
+  }
   {}
-  {\newcommaunit}
-  \usebibmacro{publisher+location+date}%
-  \newunit\newblock
+  {%
+    \newunit\newblock
+    \usebibmacro{event+venue+date}%
+    \newunit\newblock
+  }
+  \usebibmacro{byeditor+others}%
+  \newcommaunit
+  \usebibmacro{book:series+number}%
+  \newcommaunit%
+  \iffieldundef{maintitle}%
+  {\printfield{volumes}%
+    \newcommaunit}%
+  {}%
+  \newunit
+  \printlist{location}%
+  \newcommaunit
+  \printfield{edition}%
+  \newcommaunit
+  \usebibmacro{date}%
+  \newunit
+  \printlist{organization}%
+  \newcommaunit*
+  \printlist{publisher}%
+  \newunit
   \usebibmacro{chapter+pages}%
   \newunit
   \printfield{pagetotal}%
@@ -341,7 +366,7 @@
     {}
     {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
   {}%
-  \usebibmacro{series+number}%
+  \usebibmacro{series+number:emphcond}%
   \newcommaunit%
   \iffieldundef{maintitle}%
   {\printfield{volumes}%
@@ -352,7 +377,6 @@
 \newbibmacro*{inproc:crossref:extra}{%
   \newcommaunit
   \printlist{location}%
-  \setunit*{\addcomma\space}%
   \newcommaunit
   \printfield{edition}%
   \newcommaunit
@@ -370,9 +394,7 @@
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
-  \printfield{addendum}%
-  \newunit\newblock
-  \printfield{pubstate}}
+  \usebibmacro{addendum+pubstate}}
 
 \newbibmacro*{inproc:crossref:conditional}{%
   \entrydata*{\strfield{crossref}}{
@@ -410,7 +432,7 @@
 
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
-  \setunit*{\addcomma\space}%
+  \newcommaunit*%
   \iffieldundef{series}
     {}
     {\newunit
@@ -464,69 +486,40 @@
   \printfield{series}%
   \newunit}
 
-
+\newbibmacro*{series+number:emphcond}{%
+  \printfield{number}%
+  \setunit*{\addspace\bibstring{inseries}\addspace}%
+  \ifboolexpr{
+    not test {\iffieldundef{volume}}
+  }%
+   {\printfield{series}}%
+   {\ifboolexpr{
+       test {\iffieldundef{volume}}
+       and
+       test {\iffieldundef{part}}
+       and
+       test {\iffieldundef{number}}
+       and
+       test {\ifentrytype{book}}
+     }%
+      {\newunit\newblock}%
+      {}%
+    \printfield[noformat]{series}}%
+  \newunit}
 
 \newbibmacro*{book:series+number}{%
-  \iffieldundef{maintitle}
-    {%
-    \printfield{volume}%
+  \iffieldundef{maintitle}%
+  {\printfield{volume}%
     \printfield{part}%
     \ifboolexpr{
-      ( not test {\iffieldundef{volume}}
-      or
-      not test {\iffieldundef{part}} )
+      test {\iffieldundef{volume}}
       and
-      test {\iffieldundef{number}}
+      test {\iffieldundef{part}}
     }%
-    {%
-    \setunit{\addspace\bibstring{ofseries}\addspace}%
-    }%
-    {}}%
     {}%
-  \iffieldundef{number}
-    {%
-    \printfield{series}%
-    }%
-    {%
-    \newunit
-    \printfield{number}%
-    \iffieldundef{series}
-      {}%
-      {%
-      \setunit{\addspace\bibstring{inseries}\addspace}%
-      \printfield[noformat]{series}%
-      }}%
-  \newunit
-}
-
-\newbibmacro*{proc:series+number}{%
-  \iffieldundef{maintitle}
-    {%
-    \printfield{volume}%
-    \printfield{part}%
-    \ifboolexpr{
-      ( not test {\iffieldundef{volume}}
-      or
-      not test {\iffieldundef{part}} )
-      and
-      test {\iffieldundef{number}}
-    }%
-    {%
-    \setunit{\addspace\bibstring{ofseries}\addspace}%
-    }%
-    {}}%
-    {}%
-  \iffieldundef{number}
-    {}%
-    {%
-    \newcommaunit
-    \printfield{number}%
-    \iffieldundef{series}
-      {}%
-      {%
-      \setunit{\addspace\bibstring{inseries}\addspace}%
-      \printfield{series}%
-      }}%
+    {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
+  {}%
+  \usebibmacro{series+number:emphcond}%
   \newunit
 }
 
@@ -540,21 +533,19 @@
 
 \renewbibmacro*{publisher+location+date}{%
   \printlist{publisher}%
-  \setunit*{\addcomma\space}%
+  \newcommaunit*
   \printlist{location}%
-  \setunit*{\addcomma\space}%
-  \newcommaunit
+  \newcommaunit*
   \printfield{edition}%
-  \newcommaunit
+  \newcommaunit*
   \usebibmacro{date}%
   \newunit}
 
 \newbibmacro*{location+date+publisher}{%
   \printlist{location}%
-  \setunit*{\addcomma\space}%
-  \newcommaunit
+  \newcommaunit*
   \printfield{edition}%
-  \newcommaunit
+  \newcommaunit*
   \usebibmacro{date}%
   \newunit
   \printlist{publisher}%
@@ -564,7 +555,7 @@
   \iffieldundef{issue}%
     {\usebibmacro{date}}%
     {\printfield{issue}%
-     \setunit*{\addcomma\space}%
+     \newcommaunit*%
      \usebibmacro{date}%
     }%
   \newunit}
