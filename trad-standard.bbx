@@ -240,13 +240,13 @@
     test {\iffieldundef{eventtitle}}
     and
     test {\iffieldundef{eventyear}}
-  }
-  {}
+  }%
+  {}%
   {%
     \newunit\newblock
     \usebibmacro{event+venue+date}%
     \newunit\newblock
-  }
+  }%
   \usebibmacro{byeditor+others}%
   \newcommaunit
   \usebibmacro{book:series+number}%
@@ -314,8 +314,8 @@
     test {\iffieldundef{maintitle}}
     and
     test {\iffieldundef{mainsubtitle}}
-  }
-  {}
+  }%
+  {}%
   {\printtext{%
       \printfield[titlecase]{maintitle}%
       \setunit{\subtitlepunct}%
@@ -328,8 +328,8 @@
     test {\iffieldundef{booktitle}}
     and
     test {\iffieldundef{booksubtitle}}
-  }
-  {}
+  }%
+  {}%
   {\printtext{%
       \printfield[titlecase]{booktitle}%
       \setunit{\subtitlepunct}%
@@ -348,9 +348,9 @@
     test {\ifnameundef{editorc}}
     and
     test {\ifnameundef{translator}}
-  }
-  {}
-  {\usebibmacro{byeditor+others}\newcommaunit}
+  }%
+  {}%
+  {\usebibmacro{byeditor+others}\newcommaunit}%
   \usebibmacro{maintitle+booktitle}%
   \newunit
   \usebibmacro{event+venue+date}%
@@ -362,8 +362,8 @@
       test {\iffieldundef{volume}}
       and
       test {\iffieldundef{part}}
-    }
-    {}
+    }%
+    {}%
     {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
   {}%
   \usebibmacro{series+number:emphcond}%
