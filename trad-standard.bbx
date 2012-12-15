@@ -483,7 +483,9 @@
     {}}%
     {}%
   \iffieldundef{number}
-    {}%
+    {%
+    \printfield{series}%
+    }%
     {%
     \newunit
     \printfield{number}%
