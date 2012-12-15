@@ -333,20 +333,21 @@
   \iffieldundef{maintitle}%
   {\printfield{volume}%
     \printfield{part}%
-    \newcommaunit%
-    \printfield{volumes}%
     \ifboolexpr{
       test {\iffieldundef{volume}}
       and
       test {\iffieldundef{part}}
-      and
-      test {\iffieldundef{volumes}}
     }
     {}
     {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
   {}%
   \usebibmacro{series+number}%
-  \newcommaunit}
+  \newcommaunit%
+  \iffieldundef{maintitle}%
+  {\printfield{volumes}%
+    \newcommaunit}%
+  {}%
+}
 
 \newbibmacro*{inproc:crossref:extra}{%
   \newcommaunit
