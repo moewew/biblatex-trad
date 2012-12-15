@@ -46,7 +46,7 @@
                    {title}{\mkbibemph{#1}}
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
-\DeclareFieldFormat[incollection,inproceedings]{number}{\biblclstring{number}~#1}
+\DeclareFieldFormat[book,incollection,inproceedings,proceedings]{number}{\biblstring{number}~#1}
 \DeclareFieldFormat{edition}{%
   \ifinteger{#1}
     {\mkbibordedition{#1}~\bibstring{edition}}
@@ -231,7 +231,7 @@
   \newunit\newblock
   \usebibmacro{byeditor+others}%
   \newcommaunit\newblock
-  \usebibmacro{book:series+number}%
+  \usebibmacro{proc:series+number}%
   \newunit
   \printfield{volumes}%
   \newunit\newblock
@@ -453,8 +453,8 @@
     or
     test {\ifandothers{editor}}
   }%
-             {\biblstring{editors}}%
-             {\biblstring{editor}}%
+  {\biblstring{editors}}%
+  {\biblstring{editor}}%
 }
 
 \renewbibmacro*{series+number}{%
@@ -467,13 +467,63 @@
 
 \newbibmacro*{book:series+number}{%
   \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
+    {%
+    \printfield{volume}%
+    \printfield{part}%
+    \ifboolexpr{
+      ( not test {\iffieldundef{volume}}
+      or
+      not test {\iffieldundef{part}} )
+      and
+      test {\iffieldundef{number}}
+    }%
+    {%
+    \setunit{\addspace\bibstring{ofseries}\addspace}%
+    }%
+    {}}%
     {}%
-  \printfield{number}%
-  \setunit*{\addspace}%
-  \iffieldundef{series}{}%
-  {\space\bibstring{ofseries}\space\printfield{series}}%
+  \iffieldundef{number}
+    {}%
+    {%
+    \newunit
+    \printfield{number}%
+    \iffieldundef{series}
+      {}%
+      {%
+      \setunit{\addspace\bibstring{inseries}\addspace}%
+      \printfield{series}%
+      }}%
+  \newunit
+}
+
+\newbibmacro*{proc:series+number}{%
+  \iffieldundef{maintitle}
+    {%
+    \printfield{volume}%
+    \printfield{part}%
+    \ifboolexpr{
+      ( not test {\iffieldundef{volume}}
+      or
+      not test {\iffieldundef{part}} )
+      and
+      test {\iffieldundef{number}}
+    }%
+    {%
+    \setunit{\addspace\bibstring{ofseries}\addspace}%
+    }%
+    {}}%
+    {}%
+  \iffieldundef{number}
+    {}%
+    {%
+    \newcommaunit
+    \printfield{number}%
+    \iffieldundef{series}
+      {}%
+      {%
+      \setunit{\addspace\bibstring{inseries}\addspace}%
+      \printfield{series}%
+      }}%
   \newunit
 }
 
