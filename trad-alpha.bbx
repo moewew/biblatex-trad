@@ -54,4 +54,10 @@
   {\endlist}
   {\item}
 
+\renewbibmacro*{crossref:label}{%
+  \entrydata
+    {\strfield{crossref}}
+    {\printtext{\mkbibbrackets
+       {\printfield{labelalpha}\printfield{extraalpha}}}}}
+
 \endinput
