@@ -14,6 +14,11 @@
 \providebool{bbx:subentry}
 \DeclareBibliographyOption{subentry}[true]{%
   \setbool{bbx:subentry}{#1}}
+\newbool{bbxtrad:doisequal}
+\newbool{bbxtrad:eprintsequal}
+\newbool{bbxtrad:urlsequal}
+\newbool{bbxtrad:notesequal}
+\newbool{bbxtrad:addendumsequal}
 %==========================================%
 %==========================================%
 %==========================================%
@@ -23,30 +28,32 @@
 %==========================================%
 %==========================================%
 %==========================================%
-% new commmands and redefinitions
+% new commands and redefinitions
 \newcommand*{\volumenumberdelim}{} % delim between number and volume
 \renewcommand*{\intitlepunct}{\addspace} % after the bibstring in
 \renewcommand*{\newunitpunct}{\addperiod\space}
-\newcommand*{\newcommaunit}{\setunit{\addcomma\space}}
+\newcommand*{\newcommaunit}{\@ifstar\newcommaunitStar\newcommaunitNoStar}
+\newcommand*{\newcommaunitStar}{\setunit*{\addcomma\space}}
+\newcommand*{\newcommaunitNoStar}{\setunit{\addcomma\space}}
 \renewcommand*{\labelnamepunct}{\addperiod\space}
 \renewcommand*{\subtitlepunct}{\addperiod\space}
 %==========================================%
 %==========================================%
 %==========================================%
-% Field formating
+% Field formatting
 \DeclareFieldFormat*{title}{#1}
 \DeclareFieldFormat[book,inbook,manual,phdthesis,proceedings]%
                    {title}{\mkbibemph{#1}}
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
-\DeclareFieldFormat[incollection,inproceedings]{number}{\biblclstring{number}~#1}
+\DeclareFieldFormat[book,incollection,inproceedings,proceedings]{number}{\biblstring{number}~#1}
 \DeclareFieldFormat{edition}{%
   \ifinteger{#1}
     {\mkbibordedition{#1}~\bibstring{edition}}
     {\MakeLowercase{#1}~\bibstring{edition}}}
-\DeclareFieldFormat{chapter}{\biblcstring{part}~#1}
+\DeclareFieldFormat{chapter}{\bibstring{part}~#1}
 \DeclareFieldFormat[article]{pages}{{#1}}
-\DeclareFieldFormat[book]{series}{\mkbibemph{#1}}
+\DeclareFieldFormat[book,inproceedings,proceedings]{series}{\mkbibemph{#1}}
 \DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
 \DeclareFieldFormat{titlecase}{\MakeTitleCase{#1}}
 
@@ -68,7 +75,7 @@
 %==========================================%
 %==========================================%
 %==========================================%
-% Seting the bibliography drivers:
+% Setting the bibliography drivers:
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -111,15 +118,22 @@
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
-  \newunit\newblock
+  \newunit
   \usebibmacro{byauthor}%
-  \newunit\newblock
+  \newunit
   \usebibmacro{byeditor+others}%
-  \newcommaunit\newblock
+  \newcommaunit
   \usebibmacro{book:series+number}%
   \newunit
   \printfield{volumes}%
-  \newunit\newblock
+  \newunit
+  \ifboolexpr{
+    test {\iffieldundef{volume}}
+    and
+    test {\iffieldundef{part}}
+    and
+    test {\iffieldundef{number}}
+  }{}{\newblock}%
   \usebibmacro{publisher+location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
@@ -198,26 +212,63 @@
   \usebibmacro{byauthor}%
   \newunit\newblock
   \usebibmacro{in:}%
-  \usebibmacro{byeditor+others}%
-  \newcommaunit\newblock
-  \usebibmacro{maintitle+booktitle}%
-  \newunit\newblock
-  \usebibmacro{event+venue+date}%
-  \newunit\newblock
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
-    {}%
-  \newunit
-  \printfield{volumes}%
-  \newcommaunit\newblock
-  \usebibmacro{series+number}%
-  \newunit\newblock
-  \printlist{organization}%
-  \newunit\newblock
+  \iffieldundef{crossref}
+    {\usebibmacro{inproc:crossref:full}}
+    {\usebibmacro{crossref:label}}
   \usebibmacro{chapter+pages}%
+  \iffieldundef{crossref}
+    {\usebibmacro{inproc:crossref:extra}}
+    {\usebibmacro{inproc:crossref:conditional}}
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \usebibmacro{related}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{proceedings}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{editor+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{maintitle+title}%
+  \newunit
+  \printlist{language}%
+  \newunit
+  \ifboolexpr{
+    test {\iffieldundef{venue}}
+    and
+    test {\iffieldundef{eventtitle}}
+    and
+    test {\iffieldundef{eventyear}}
+  }%
+  {}%
+  {%
+    \newunit\newblock
+    \usebibmacro{event+venue+date}%
+    \newunit\newblock
+  }%
+  \usebibmacro{byeditor+others}%
   \newcommaunit
-  \usebibmacro{location+date+publisher}%
+  \usebibmacro{book:series+number}%
+  \newcommaunit%
+  \iffieldundef{maintitle}%
+  {\printfield{volumes}%
+    \newcommaunit}%
+  {}%
+  \newunit
+  \printlist{location}%
+  \newcommaunit
+  \printfield{edition}%
+  \newcommaunit
+  \usebibmacro{date}%
+  \newunit
+  \printlist{organization}%
+  \newcommaunit*
+  \printlist{publisher}%
+  \newunit
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
     {\printfield{isbn}}
@@ -225,9 +276,9 @@
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
   \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \newunit\newblock
   \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
   \newunit\newblock
@@ -238,9 +289,150 @@
 %==========================================%
 %==========================================%
 %new-/redefinition of bibmacros
+\newbibmacro*{crossref:label}{%
+  \usebibmacro{maintitle+booktitle:noemph}%
+  \setunit{\addspace}
+  \entrydata
+  {\strfield{crossref}}
+  {\printtext{\mkbibbrackets{\printfield{labelnumber}}}}}
+
+\newbibmacro*{maintitle+booktitle:noemph}{%
+  \iffieldundef{maintitle}
+  {}
+  {\usebibmacro{maintitle:noemph}%
+    \newunit\newblock
+    \iffieldundef{volume}
+    {}
+    {\printfield{volume}%
+      \printfield{part}%
+      \setunit{\addcolon\space}}}%
+  \usebibmacro{booktitle:noemph}%
+  \newunit}
+
+\newbibmacro*{maintitle:noemph}{%
+  \ifboolexpr{
+    test {\iffieldundef{maintitle}}
+    and
+    test {\iffieldundef{mainsubtitle}}
+  }%
+  {}%
+  {\printtext{%
+      \printfield[titlecase]{maintitle}%
+      \setunit{\subtitlepunct}%
+      \printfield[titlecase]{mainsubtitle}}%
+    \newunit}%
+  \printfield{maintitleaddon}}
+
+\newbibmacro*{booktitle:noemph}{%
+  \ifboolexpr{
+    test {\iffieldundef{booktitle}}
+    and
+    test {\iffieldundef{booksubtitle}}
+  }%
+  {}%
+  {\printtext{%
+      \printfield[titlecase]{booktitle}%
+      \setunit{\subtitlepunct}%
+      \printfield[titlecase]{booksubtitle}}%
+    \newunit}%
+  \printfield{booktitleaddon}}
+
+\newbibmacro*{inproc:crossref:full}{%
+  \ifboolexpr{
+    test {\ifnameundef{editor}}
+    and
+    test {\ifnameundef{editora}}
+    and
+    test {\ifnameundef{editorb}}
+    and
+    test {\ifnameundef{editorc}}
+    and
+    test {\ifnameundef{translator}}
+  }%
+  {}%
+  {\usebibmacro{byeditor+others}\newcommaunit}%
+  \usebibmacro{maintitle+booktitle}%
+  \newunit
+  \usebibmacro{event+venue+date}%
+  \newcommaunit
+  \iffieldundef{maintitle}%
+  {\printfield{volume}%
+    \printfield{part}%
+    \ifboolexpr{
+      test {\iffieldundef{volume}}
+      and
+      test {\iffieldundef{part}}
+    }%
+    {}%
+    {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
+  {}%
+  \usebibmacro{series+number:emphcond}%
+  \newcommaunit%
+  \iffieldundef{maintitle}%
+  {\printfield{volumes}%
+    \newcommaunit}%
+  {}%
+}
+
+\newbibmacro*{inproc:crossref:extra}{%
+  \newcommaunit
+  \printlist{location}%
+  \newcommaunit
+  \printfield{edition}%
+  \newcommaunit
+  \usebibmacro{date}%
+  \newunit
+  \printlist{organization}%
+  \newcommaunit*
+  \printlist{publisher}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+  {\printfield{isbn}}
+  {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}}
+
+\newbibmacro*{inproc:crossref:conditional}{%
+  \entrydata*{\strfield{crossref}}{
+    \iffieldsequal{doi}{saveddoi}
+    {\global\booltrue{bbxtrad:doisequal}}
+    {\global\boolfalse{bbxtrad:doisequal}}
+    \iffieldsequal{eprint}{savedeprint}
+    {\global\booltrue{bbxtrad:eprintsequal}}
+    {\global\boolfalse{bbxtrad:eprintsequal}}
+    \iffieldsequal{url}{savedurl}
+    {\global\booltrue{bbxtrad:urlsequal}}
+    {\global\boolfalse{bbxtrad:urlsequal}}
+    \iffieldsequal{note}{savednote}
+    {\global\booltrue{bbxtrad:notesequal}}
+    {\global\boolfalse{bbxtrad:notesequal}}
+    \iffieldsequal{addendum}{savedaddendum}
+    {\global\booltrue{bbxtrad:addendumsequal}}
+    {\global\boolfalse{bbxtrad:addendumsequal}}}
+  \newunit\newblock
+  \iftoggle{bbx:doi}
+  {\ifbool{bbxtrad:doisequal}{}{\printfield{saveddoi}}}
+  {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+  {\ifbool{bbxtrad:eprintsequal}{}{\usebibmacro{eprint}}}
+  {}%
+  \newunit\newblock
+  \iftoggle{bbx:url}
+  {\ifbool{bbxtrad:urlsequal}{}{\usebibmacro{url+urldate}}}
+  {}%
+  \newunit\newblock
+  \ifbool{bbxtrad:notesequal}{}{\printfield{note}}%
+  \newunit\newblock
+  \ifbool{bbxtrad:addendumsequal}{}{\printfield{addendum}}}
+
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
-  \setunit*{\addcomma\space}%
+  \newcommaunit*%
   \iffieldundef{series}
     {}
     {\newunit
@@ -279,37 +471,55 @@
 
 
 \newbibmacro*{editorlstr}{%
-\printtext{%
-      \ifboolexpr{
-     test {\ifnumgreater{\value{editor}}{1}}
-     or
-     test {\ifandothers{editor}}
-         }%
-      {\biblstring{editors}}%
-      {\biblstring{editor}}}%
+  \ifboolexpr{
+    test {\ifnumgreater{\value{editor}}{1}}
+    or
+    test {\ifandothers{editor}}
+  }%
+  {\biblstring{editors}}%
+  {\biblstring{editor}}%
 }
 
 \renewbibmacro*{series+number}{%
   \printfield{number}%
-  \setunit*{\addspace}%
-  \iffieldundef{series}{}%
-   {
-    \usebibmacro{in:}%
-    \printfield{series}%
-   }%
+  \setunit*{\addspace\bibstring{inseries}\addspace}%
+  \printfield{series}%
   \newunit}
 
-
+\newbibmacro*{series+number:emphcond}{%
+  \printfield{number}%
+  \setunit*{\addspace\bibstring{inseries}\addspace}%
+  \ifboolexpr{
+    not test {\iffieldundef{volume}}
+  }%
+   {\printfield{series}}%
+   {\ifboolexpr{
+       test {\iffieldundef{volume}}
+       and
+       test {\iffieldundef{part}}
+       and
+       test {\iffieldundef{number}}
+       and
+       test {\ifentrytype{book}}
+     }%
+      {\newunit\newblock}%
+      {}%
+    \printfield[noformat]{series}}%
+  \newunit}
 
 \newbibmacro*{book:series+number}{%
-  \iffieldundef{maintitle}
-    {\printfield{volume}%
-     \printfield{part}}
+  \iffieldundef{maintitle}%
+  {\printfield{volume}%
+    \printfield{part}%
+    \ifboolexpr{
+      test {\iffieldundef{volume}}
+      and
+      test {\iffieldundef{part}}
+    }%
     {}%
-  \printfield{number}%
-  \setunit*{\addspace}%
-  \iffieldundef{series}{}%
-  {\space\bibstring{ofseries}\space\printfield{series}}%
+    {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
+  {}%
+  \usebibmacro{series+number:emphcond}%
   \newunit
 }
 
@@ -323,21 +533,19 @@
 
 \renewbibmacro*{publisher+location+date}{%
   \printlist{publisher}%
-  \setunit*{\addcomma\space}%
+  \newcommaunit*
   \printlist{location}%
-  \setunit*{\addcomma\space}%
-  \newcommaunit
+  \newcommaunit*
   \printfield{edition}%
-  \newcommaunit
+  \newcommaunit*
   \usebibmacro{date}%
   \newunit}
 
 \newbibmacro*{location+date+publisher}{%
   \printlist{location}%
-  \setunit*{\addcomma\space}%
-  \newcommaunit
+  \newcommaunit*
   \printfield{edition}%
-  \newcommaunit
+  \newcommaunit*
   \usebibmacro{date}%
   \newunit
   \printlist{publisher}%
@@ -347,7 +555,7 @@
   \iffieldundef{issue}%
     {\usebibmacro{date}}%
     {\printfield{issue}%
-     \setunit*{\addcomma\space}%
+     \newcommaunit*%
      \usebibmacro{date}%
     }%
   \newunit}
