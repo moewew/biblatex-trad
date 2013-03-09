@@ -1,0 +1,28 @@
+% TEX root = path/to/root_file.tex
+% !TEX program = arara
+% !TEX encoding = utf8
+% !TEX spellcheck = en_GB
+% arara: pdflatex: {draft: true}
+% arara: biber
+% arara: pdflatex: {synctex: true}
+% arara: pdflatex: {synctex: true}
+%: Start Header
+\documentclass{article}
+\providecommand\noopsort[1]{}
+\usepackage{graphicx}
+\usepackage[%
+ backend   =  biber   , 
+ style     = trad-plain,
+% style     = trad-unsrt,
+% style     = trad-alpha,
+% style     = trad-abbrv,
+]{biblatex}
+\addbibresource{biblatex-trad-examples.bib}
+%\renewcommand*{\intitlepunct}{\addcomma\space}
+\begin{document}
+\cite{inproceedings-full}
+
+\cite{HMT}
+%\nocite{*}
+\printbibliography
+\end{document}
