@@ -71,7 +71,9 @@ all:	doc clean
 ################################################################
 ## personal setting
 ################################################################
-localinstall:
+localinstall:	doc makelocalinstall clean
+	
+makelocalinstall:
 	echo  "" ;\
 	echo -e "\t$(ERROR_COLOR)Start local install$(NO_COLOR)" ;\
 	PATHTEXHOME=`kpsewhich --var-value=TEXMFHOME` ;\
