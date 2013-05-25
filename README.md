@@ -13,7 +13,7 @@ The complete idea was inspired by a question at [tex.stackexchange](http://tex.s
 Installation
 -------------
 
-The package is published via [CTAN](http://www.ctan.org/) and should be available via your favourite distribution.
+The package is published via [CTAN](http://www.ctan.org/tex-archive/macros/latex/contrib/biblatex-contrib/biblatex-trad) and should be available via your favourite distribution.
 
 The development branch can be downloaded here. I provide a simple `Makefile` which allows you to install the current development branch via
 
