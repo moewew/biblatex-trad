@@ -31,7 +31,7 @@ ERROR_COLOR = \x1b[31;01m
 help:
 	@echo 
 	@echo -e "$(WARN_COLOR)The following definitions provided by this Makefile"
-	@echo -e "$(OK_COLOR)\tmake pdf\t\t--\ttypesets the documenation"
+	@echo -e "$(OK_COLOR)\tmake doc\t\t--\ttypesets the documenation"
 	@echo -e "$(OK_COLOR)\tmake all\t\t--\trun doc clean"
 	@echo -e "\tmake clean\t\t--\tremove all helpfiles"
 	@echo -e "\tmake localinstall\t--\tinstall the package in TEXMFHOME"
