@@ -1,9 +1,9 @@
 %%  Copyright (c) 2012 Marco Daniel
-%% 
+%%
 %%  This package may be distributed under the terms of the LaTeX Project
 %%  Public License, as described in lppl.txt in the base LaTeX distribution.
 %%  Either version 1.0 or, at your option, any later version.
-\ProvidesFile{trad-abbrv.bbx}[2012/09/29]
+\ProvidesFile{trad-abbrv.bbx}[2016/03/28]
 
 \RequireBibliographyStyle{trad-standard}
 
@@ -15,11 +15,21 @@
  labelnumber=  true    ,
 }
 
+\@ifpackagelater{biblatex}{2016/03/01}{%
+\DeclareNameFormat{abbrv}{%
+  \nameparts{#1}%
+  \usebibmacro{name:given-family}
+      {\namepartfamily}
+      {\namepartgiveni}
+      {\namepartprefixi}
+      {\namepartsuffixi}%
+  \usebibmacro{name:andothers}}
+}{%
 \DeclareNameFormat{abbrv}{%
   \usebibmacro{name:first-last}{#1}{#4}{#6}{#8}%
   \usebibmacro{name:andothers}}
+}
 \DeclareNameAlias{default}{abbrv}
-
 
 \DeclareFieldFormat{bibentrysetcount}{\mkbibparens{\mknumalph{#1}}}
 \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
