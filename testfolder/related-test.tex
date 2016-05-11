@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage[backend=biber,
+%  style=trad-plain
+  ]{biblatex}
+\usepackage[colorlinks]{hyperref}
+
+\renewcommand*{\relatedpunct}{\addcolon\space}
+\renewcommand*{\relateddelim}{\addcomma\space}
+
+\newbibmacro*{related:prelim}[1]{%
+  \renewcommand*{\newunitpunct}{\addcomma\space}%
+  \entrydata{#1}{\usebibmacro{doi+eprint+url}}}
+
+\NewBibliographyString{prelim,prelims}
+\DefineBibliographyStrings{american}{%
+  prelim = {Preliminary version},
+  prelims = {Preliminary versions}}
+
+\begin{filecontents}{\jobname.bib}
+@article{v008a021,
+  author = {Roy Kasher and Julia Kempe},
+  title = {Two-Source Extractors Secure Against Quantum Adversaries},
+  year = {2012},
+  pages = {461-486},
+  doi = {10.4086/toc.2012.v008a021},
+  journal = {Theory of Computing},
+  volume = {8},
+  number = {1},
+  related = {kasher/arxiv,kasher/approx},
+  relatedtype = {prelim}}
+@online{kasher/arxiv,
+  author = {Kasher, Roy and Kempe, Julia},
+  title = {Two-Source Extractors Secure Against Quantum Adversaries},
+  eprinttype = {arxiv},
+  eprintclass = {quant-ph},
+  eprint = {1005.0512},
+  month = may,
+  year = {2010}}
+@inproceedings{kasher/approx,
+  author = {Kasher, Roy and Kempe, Julia},
+  title = {Two-source extractors secure against quantum adversaries},
+  booktitle = {Proceedings of the 13th international conference on Approximation,
+    and the 14th International conference on Randomization, and combinatorial
+    optimization: algorithms and techniques},
+  series = {APPROX/RANDOM'10},
+  year = {2010},
+  venue = {Barcelona, Spain},
+  pages = {656--669},
+  url = {http://dl.acm.org/citation.cfm?id=1886521.1886572},
+  publisher = {Springer-Verlag},
+  location = {Berlin, Heidelberg}}
+@article{aingworth,
+	author    = {Donald Aingworth and Chandra Chekuri and Piotr Indyk and Rajeev Motwani},
+	title     = {Fast Estimation of Diameter and Shortest Paths (Without Matrix Multiplication)},
+	journal   = {SIAM J. Comput.},
+  eprint    = {99a:01001},
+	pages     = {1167--1181},
+	volume    = 28,
+eid = {R15},
+ issue = {special issue for FOCS},
+series = {Awesome series},
+ 	year      = 2012,
+  	number    = 4,
+	doi = {10.1137/S0097539796303421},
+  eprinttype = {mathscinet},
+ related = {DBLP:conf/soda/AingworthCM96},
+ relatedtype = {prelim}}
+@inproceedings{DBLP:conf/soda/AingworthCM96,
+  author    = {Donald Aingworth and
+               Chandra Chekuri and
+               Rajeev Motwani},
+  title     = {Fast Estimation of Diameter and Shortest Paths (without
+               Matrix Multiplication)},
+  year      = {1996},
+  pages     = {547--553},
+  doi       = {10.1145/313852.314117},
+  booktitle = {Proceedings of SODA 1996}}
+\end{filecontents}
+
+\addbibresource{\jobname.bib}
+\begin{document}
+\cite{v008a021,aingworth}
+\printbibliography
+\end{document}
