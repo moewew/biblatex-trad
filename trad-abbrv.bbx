@@ -16,10 +16,14 @@
 }
 
 \DeclareNameFormat{abbrv}{%
-  \usebibmacro{name:first-last}{#1}{#4}{#6}{#8}%
+  \nameparts{#1}%
+  \usebibmacro{name:given-family}
+      {\namepartfamily}
+      {\namepartgiveni}
+      {\namepartprefixi}
+      {\namepartsuffixi}%
   \usebibmacro{name:andothers}}
 \DeclareNameAlias{default}{abbrv}
-
 
 \DeclareFieldFormat{bibentrysetcount}{\mkbibparens{\mknumalph{#1}}}
 \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
