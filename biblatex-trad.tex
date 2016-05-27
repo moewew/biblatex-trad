@@ -44,7 +44,7 @@
   pdftitle={The biblatex-trad Package},
   pdfsubject={Traditional bibliography styles for biblatex},
   pdfauthor={Marco Daniel},
-  pdfkeywords={tex, latex, bibtex, bibliography, references, citation}}
+  pdfkeywords={tex, latex, biblatex, bibtex, bibliography, references, citation}}
 
 
 \newrobustcmd*{\Deprecated}{%
@@ -81,7 +81,7 @@ It provides the implementation of the traditional bibliography styles (\sty{plai
 
 \subsection{Motivation}\label{subsec:int:mot}
 
-The package is motivated by a question at \tex-\latex Stack Exchange \glqq \href{http://tex.stackexchange.com/}{How to emulate the traditional BibTeX styles (plain, abbrv, unsrt, alpha) as closely as possible with biblatex?}
+The package is motivated by a question at \tex -- \latex Stack Exchange \glqq \href{http://tex.stackexchange.com/a/69706/}{How to emulate the traditional BibTeX styles (plain, abbrv, unsrt, alpha) as closely as possible with biblatex?}
 
 \subsection{Requirements}
 
@@ -89,39 +89,40 @@ The usage of the styles requires \sty{biblatex} 2.0 or newer.
 
 \subsection{License}
 
-Copyright \textcopyright\ 2006--2012 Marco Daniel. Permission is granted to copy, distribute and\slash or modify this software under the terms of the \lppl, version 1.3.\fnurl{http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt}.
+Copyright \textcopyright\ 2006--2012 Marco Daniel, 2016 Moritz Wemheuer. Permission is granted to copy, distribute and\slash or modify this software under the terms of the \lppl, version 1.3c.\fnurl{http://www.latex-project.org/lppl.txt}.
 
 
 \subsection{Feedback}\label{subsec:int:feb}
 
-Please use the \sty{biblatex-trad} project page on GitHub to report bugs and submit feature requests.\fnurl{https://github.com/marcodaniel/trad-biblatex}
+Please use the \sty{biblatex-trad} project page on GitHub to report bugs and submit feature requests.\fnurl{https://github.com/moewew/biblatex-trad}
 
-If you do not want to report a bug or request a feature but are simply in need of assistance, you might want to consider posting your question on the \texttt{comp.text.tex} newsgroup or \tex-\latex Stack Exchange.\fnurl{http://tex.stackexchange.com/questions/tagged/biblatex}
+If you do not want to report a bug or request a feature but are simply in need of assistance, you might want to consider posting your question on the \texttt{comp.text.tex} newsgroup or \tex -- \latex Stack Exchange.\fnurl{http://tex.stackexchange.com/questions/tagged/biblatex}
 
 \section{Usage}
 
-\sty{biblatex-trad} isn't a standalone package. As described in \secref{sec:int} it's
+\sty{biblatex-trad} is not a standalone package. As described in \secref{sec:int} it is
 a small collection of styles. So you can load the styles as follows:
 
 \begin{lstlisting}[style=latex]{}
 \usepackage[style=XXX]{biblatex}
 \end{lstlisting}
-The available styles are listet below.
+The available styles are listed below.
 \begin{marglist}
 
 \item[trad-plain] Implementation of the standard style \sty{plain}
 \item[trad-unsrt] Implementation of the standard style \sty{unsrt}
-\item[trad-alpha] \BiberOnlyMark  Implementation of the standard style \sty{alpha}
-\item[trad-abbrv]  Implementation of the standard style \sty{abbrv}
+\item[trad-alpha] \BiberOnlyMark Implementation of the standard style \sty{alpha}
+\item[trad-abbrv] Implementation of the standard style \sty{abbrv}
 
 \end{marglist}
 
-After loading the style you can use all options provided by the package \sty{biblatex}. That means also that all keys of the bibliography drivers are availble. Related to the orginal bibliography styles you have a lot more powerful keys which won't cleared by this package.
+After loading the style you can use all options provided by the package \sty{biblatex}.
+That means also that all keys of the bibliography drivers are availble.
+Related to the orginal bibliography styles you have a lot more powerful keys which won't cleared by this package.
 
 \section{Limitation}
 
-Up to know the entry types \bibtype{BOOK}, \bibtype{ARTICLE} and \bibtype{INCOLLECTION} are
-setup.
+Up to now the entry types \bibtype{book}, \bibtype{article} and \bibtype{incollection} are set up.
 
 \section{Revision History}
 \label{apx:log}

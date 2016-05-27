@@ -8,12 +8,12 @@ Introduction
 
 The complete idea was inspired by a question at [tex.stackexchange](http://tex.stackexchange.com/):
 
-[How to emulate the traditional BibTeX styles (plain, abbrv, unsrt, alpha) as closely as possible with biblatex?](http://tex.stackexchange.com/questions/58152/how-to-emulate-the-traditional-bibtex-styles-plain-abbrv-unsrt-alpha-as-clo/69706#69706)
+[How to emulate the traditional BibTeX styles (plain, abbrv, unsrt, alpha) as closely as possible with biblatex?](http://tex.stackexchange.com/a/69706/)
 
 Installation
 -------------
 
-The package is published via [CTAN](http://www.ctan.org/tex-archive/macros/latex/contrib/biblatex-contrib/biblatex-trad) and should be available via your favourite distribution.
+The package is published via [CTAN](https://www.ctan.org/pkg/biblatex-trad) and should be available via your favourite distribution.
 
 The development branch can be downloaded here. I provide a simple `Makefile` which allows you to install the current development branch via
 
