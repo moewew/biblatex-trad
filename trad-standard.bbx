@@ -44,7 +44,7 @@
 %==========================================%
 % Field formatting
 \DeclareFieldFormat*{title}{#1}
-\DeclareFieldFormat[book,inbook,manual,phdthesis,proceedings]%
+\DeclareFieldFormat[book,inbook,manual,thesis,proceedings]%
                    {title}{\mkbibemph{#1}}
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
@@ -308,6 +308,43 @@
     {}%
   \usebibmacro{finentry}}
 
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \printfield{type}%
+  \newcommaunit
+  \usebibmacro{institution+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
 %==========================================%
 %==========================================%
 %==========================================%
@@ -558,6 +595,14 @@
   \printlist{location}%
   \newcommaunit*
   \printfield{edition}%
+  \newcommaunit*
+  \usebibmacro{date}%
+  \newunit}
+
+\renewbibmacro*{institution+location+date}{%
+  \printlist{institution}%
+  \newcommaunit*
+  \printlist{location}%
   \newcommaunit*
   \usebibmacro{date}%
   \newunit}
