@@ -31,7 +31,7 @@
   {\list
      {\printtext[labelalphawidth]{%
         \printfield{prefixnumber}%
-	\printfield{labelalpha}%
+        \printfield{labelalpha}%
         \printfield{extraalpha}}}
      {\setlength{\labelwidth}{\labelalphawidth}%
       \setlength{\leftmargin}{\labelwidth}%
@@ -59,7 +59,7 @@
 \renewbibmacro*{crossref:label}{%
   \entrydata
     {\strfield{crossref}}
-    {\printtext{\mkbibbrackets
+    {\printtext[brackets]{%
        {\printfield{labelalpha}\printfield{extraalpha}}}}}
 
 \endinput

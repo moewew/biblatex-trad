@@ -74,6 +74,12 @@
     \OR\ifentrytype{report}\OR\ifentrytype{thesis}}
     {#1}
     {\MakeSentenceCase{#1}}}
+
+\newbibmacro*{in:}{%
+  \printtext{%
+    \bibstring{in}%
+    \printunit{\intitlepunct}}}
+
 %==========================================%
 %==========================================%
 %==========================================%
@@ -537,16 +543,14 @@
     {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
   {}%
   \usebibmacro{series+number:emphcond}%
-  \newunit
-}
+  \newunit}
 
 \renewbibmacro*{volume+number+eid}{%
   \printfield{volume}%
   \setunit*{\volumenumberdelim}%
   \printfield{number}%
   \setunit{\addcomma\space}%
-  \printfield{eid}%
-}
+  \printfield{eid}}
 
 \renewbibmacro*{publisher+location+date}{%
   \printlist{publisher}%
@@ -565,16 +569,14 @@
   \newcommaunit*
   \usebibmacro{date}%
   \newunit
-  \printlist{publisher}%
-  }
+  \printlist{publisher}}
 
 \newbibmacro*{issue+date-parens}{%
   \iffieldundef{issue}%
     {\usebibmacro{date}}%
     {\printfield{issue}%
      \newcommaunit*%
-     \usebibmacro{date}%
-    }%
+     \usebibmacro{date}}%
   \newunit}
 
 

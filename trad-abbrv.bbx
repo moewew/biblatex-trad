@@ -47,8 +47,8 @@
 \defbibenvironment{bibliography}
   {\list
      {\printtext[labelnumberwidth]{%
-	\printfield{prefixnumber}%
-	\printfield{labelnumber}}}
+        \printfield{prefixnumber}%
+        \printfield{labelnumber}}}
      {\setlength{\labelwidth}{\labelnumberwidth}%
       \setlength{\leftmargin}{\labelwidth}%
       \setlength{\labelsep}{\biblabelsep}%
@@ -76,12 +76,11 @@
   \entryset
     {\ifbool{bbx:subentry}
        {\printfield[bibentrysetcount]{entrysetcount}%
-	\setunit*{\addnbspace}}
+        \setunit*{\addnbspace}}
        {}}
     {}%
   \newunit\newblock
   \usebibmacro{setpageref}%
   \finentry}
-
 
 \endinput
