@@ -17,9 +17,26 @@
  labelnumber=  true    ,
 }
 
-\DeclareNameFormat{abbrv}{%
-  \usebibmacro{name:first-last}{#1}{#4}{#6}{#8}%
-  \usebibmacro{name:andothers}}
+\@ifpackagelater{biblatex}{2016/03/01}{%
+  \@ifpackagelater{biblatex}{2016/05/14}{%
+    \DeclareNameFormat{abbrv}{%
+      \usebibmacro{name:given-family}
+        {\namepartfamily}
+        {\namepartgiveni}
+        {\namepartprefixi}
+        {\namepartsuffixi}%
+      \usebibmacro{name:andothers}}}
+   {\DeclareNameFormat{abbrv}{%
+      \nameparts{#1}%
+      \usebibmacro{name:given-family}
+        {\namepartfamily}
+        {\namepartgiveni}
+        {\namepartprefixi}
+        {\namepartsuffixi}%
+      \usebibmacro{name:andothers}}}}
+{\DeclareNameFormat{abbrv}{%
+   \usebibmacro{name:first-last}{#1}{#4}{#6}{#8}%
+   \usebibmacro{name:andothers}}}
 \DeclareNameAlias{default}{abbrv}
 
 
