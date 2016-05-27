@@ -7,11 +7,9 @@
 \documentclass{ltxdockit}[2011/03/25]
 \usepackage{btxdockit}
 \usepackage[utf8]{inputenc}
-\usepackage[american]{babel}
+\usepackage[british]{babel}
 \usepackage[strict]{csquotes}
-\usepackage{shortvrb}
-\usepackage{pifont}
-%\usepackage{libertine-type1}
+\usepackage{libertine}
 \usepackage[scaled=0.8]{beramono}
 \usepackage{microtype}
 \lstset{basicstyle=\ttfamily,keepspaces=true}
@@ -27,18 +25,17 @@
 
 
 \MakeAutoQuote*{<}{>}
-\MakeShortVerb{\|}
 
 
-\newcommand*{\biber}{Biber\xspace}
+\newcommand*{\biber}{Biber}
 \titlepage{%
   title={The \sty{biblatex-trad} Package},
   subtitle={Traditional bibliography styles for \sty{biblatex}},
   url={},
-  author={Marco Daniel},
-  email={marco.daniel@mada-nada.de},
-  revision={0.2},
-  date={29. Sep 2012}}
+  author={Marco Daniel\\Moritz Wemheuer},
+  email={},
+  revision={0.3},
+  date={\today}}
 
 \hypersetup{%
   pdftitle={The biblatex-trad Package},
@@ -59,6 +56,8 @@
   \textcolor{spot}{\margnotefont BibTeX only}}
 \newrobustcmd*{\BibTeXOnlyMark}{%
   \leavevmode\marginpar{\BibTeXOnly}}
+\newcommand*{\gitissuelink}[1]{%
+  \href{https://github.com/moewew/biblatex-trad/issues/#1}{issue \##1 on github}}
 
 \hyphenation{%
   star-red
@@ -81,30 +80,32 @@ It provides the implementation of the traditional bibliography styles (\sty{plai
 
 \subsection{Motivation}\label{subsec:int:mot}
 
-The package is motivated by a question at \tex -- \latex Stack Exchange \glqq \href{http://tex.stackexchange.com/a/69706/}{How to emulate the traditional BibTeX styles (plain, abbrv, unsrt, alpha) as closely as possible with biblatex?}
+The package is motivated by a question at \tex{} -- \latex Stack Exchange \enquote{\href{http://tex.stackexchange.com/a/69706/}{How to emulate the traditional BibTeX styles (\sty{plain}, \sty{abbrv}, \sty{unsrt}, \sty{alpha}) as closely as possible with \sty{biblatex}?}}
 
 \subsection{Requirements}
-
-The usage of the styles requires \sty{biblatex} 2.0 or newer.
+The usage of the styles requires the \sty{biblatex} package.
+It is tested with the current version of \sty{biblatex} (at the time of writing that is 3.4).
+Care has been taken to retain backwards compatibility with older versions,
+but please do not expect the styles to work flawlessly with ancient versions of \sty{biblatex}.
 
 \subsection{License}
 
-Copyright \textcopyright\ 2006--2012 Marco Daniel, 2016 Moritz Wemheuer. Permission is granted to copy, distribute and\slash or modify this software under the terms of the \lppl, version 1.3c.\fnurl{http://www.latex-project.org/lppl.txt}.
+Copyright \textcopyright\ 2006--2012 Marco Daniel, 2016 Moritz Wemheuer. Permission is granted to copy, distribute and\slash or modify this software under the terms of the \lppl, version 1.3c.\fnurl{http://www.latex-project.org/lppl.txt}
 
 
 \subsection{Feedback}\label{subsec:int:feb}
 
 Please use the \sty{biblatex-trad} project page on GitHub to report bugs and submit feature requests.\fnurl{https://github.com/moewew/biblatex-trad}
 
-If you do not want to report a bug or request a feature but are simply in need of assistance, you might want to consider posting your question on the \texttt{comp.text.tex} newsgroup or \tex -- \latex Stack Exchange.\fnurl{http://tex.stackexchange.com/questions/tagged/biblatex}
+If you do not want to report a bug or request a feature but are simply in need of assistance, you might want to consider posting your question on the \texttt{comp.text.tex} newsgroup or \tex{} -- \latex Stack Exchange.\fnurl{http://tex.stackexchange.com/questions/tagged/biblatex}
 
 \section{Usage}
 
 \sty{biblatex-trad} is not a standalone package. As described in \secref{sec:int} it is
 a small collection of styles. So you can load the styles as follows:
 
-\begin{lstlisting}[style=latex]{}
-\usepackage[style=XXX]{biblatex}
+\begin{lstlisting}[style=latex,escapeinside={(*@}{@*)}]{}
+\usepackage[style=(*@$\langle$\normalfont\emph{style}$\rangle$@*)]{biblatex}
 \end{lstlisting}
 The available styles are listed below.
 \begin{marglist}
@@ -116,19 +117,21 @@ The available styles are listed below.
 
 \end{marglist}
 
-After loading the style you can use all options provided by the package \sty{biblatex}.
-That means also that all keys of the bibliography drivers are availble.
-Related to the orginal bibliography styles you have a lot more powerful keys which won't cleared by this package.
+After loading the style you can use all options provided by \sty{biblatex}.
+That means also that all fields of the standard bibliography drivers are available,
+even if they are unknown to the traditional \texttt{.bst} files.
 
 \section{Limitation}
 
-Up to now the entry types \bibtype{book}, \bibtype{article} and \bibtype{incollection} are set up.
+Up to now the entry types \bibtype{book}, \bibtype{article}, \bibtype{incollection} and \bibtype{thesis} are set up.
 
-\section{Revision History}
-\label{apx:log}
-
-
+\section{Revision History}\label{apx:log}
 \begin{changelog}
+\begin{release}{0.3}{2016-05-27}
+\item fix issues with new name formats in \sty{biblatex} versions $\geq$~3.3 (\gitissuelink{25})
+\item fix problems with the related mechanism (\gitissuelink{24})
+\item proper support for \bibtype{thesis}-types (\gitissuelink{23})
+\end{release}
 
 \begin{release}{0.2}{2012-09-29}
 \item fixed missing comma after journal name if journal name has a period
@@ -142,9 +145,7 @@ Up to now the entry types \bibtype{book}, \bibtype{article} and \bibtype{incolle
 \begin{release}{0.1}{2012-09-09}
 \item First upload
 \end{release}
-
 \end{changelog}
 \end{document}
 
 \endinput
-
