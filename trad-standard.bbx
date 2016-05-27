@@ -99,9 +99,16 @@
   \newunit\newblock
   \printfield{version}%
   \newunit\newblock
-  \usebibmacro{journal+issuetitle}%
-  \newunit
-  \usebibmacro{byeditor+others}%
+  \iffieldundef{crossref}
+    {\usebibmacro{journal+issuetitle}%
+     \newunit
+     \usebibmacro{byeditor+others}}
+    {\usebibmacro{in:}%
+     \usebibmacro{journal}%
+     \setunit{\addspace}%
+     \usebibmacro{crossref:cite}%
+     \setunit{\addcomma\space}%
+     \printfield{pages}}
   \newunit
   \printfield{note}%
   \newunit\newblock
@@ -311,6 +318,14 @@
 %==========================================%
 %==========================================%
 %==========================================%
+
+
+\newbibmacro{crossref:cite}{%
+  \printtext[brackets]{%
+    \entrydata{\thefield{crossref}}{%
+      \usebibmacro{cite}}}}
+
+
 %new-/redefinition of bibmacros
 \newbibmacro*{crossref:label}{%
   \usebibmacro{maintitle+booktitle:noemph}%
