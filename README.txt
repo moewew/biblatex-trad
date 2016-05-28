@@ -5,6 +5,8 @@ biblatex.
 ================================================================
 The current development is available at github:
 https://github.com/moewew/biblatex-trad
+you can leave bug reports and feature requests at the issue page
+there
 
 ================================================================
 Copyright (c) 2012         Marco Daniel

@@ -1,4 +1,4 @@
-trad-biblatex
+biblatex-trad
 =============
 
 traditional bibliography styles with [`biblatex`](http://www.ctan.org/pkg/biblatex)
@@ -18,3 +18,12 @@ The package is published via [CTAN](https://www.ctan.org/pkg/biblatex-trad) and 
 The development branch can be downloaded here. I provide a simple `Makefile` which allows you to install the current development branch via
 
      make localinstall
+
+Licence
+-------------
+Copyright (c) 2012         Marco Daniel
+              2016 --      Moritz Wemheuer
+
+This package is released under the terms of the LaTeX Project
+Public License v1.3c or later.
+See http://www.latex-project.org/lppl.txt

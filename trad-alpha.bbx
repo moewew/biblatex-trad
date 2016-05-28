@@ -15,7 +15,8 @@
  dateabbrev =  false   , % no short form of dates
  abbreviate =  false   ,
  labelalpha =  true    ,
- maxalphanames =  99,
+ maxalphanames = 3,
+ minalphanames = 3,
 }
 
 
@@ -25,6 +26,7 @@
 
 \DeclareFieldFormat{labelalphawidth}{\mkbibbrackets{#1}}
 \DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}}
+\renewcommand*{\labelalphaothers}{\textsuperscript{+}}
 
 
 \defbibenvironment{bibliography}

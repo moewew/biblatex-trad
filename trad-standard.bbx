@@ -44,11 +44,12 @@
 %==========================================%
 % Field formatting
 \DeclareFieldFormat*{title}{#1}
-\DeclareFieldFormat[book,inbook,manual,phdthesis,proceedings]%
+\DeclareFieldFormat[book,inbook,manual,thesis,proceedings]%
                    {title}{\mkbibemph{#1}}
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
 \DeclareFieldFormat[book,incollection,inproceedings,proceedings]{number}{\biblstring{number}~#1}
+\DeclareFieldFormat[techreport,report]{number}{#1}
 \DeclareFieldFormat{edition}{%
   \ifinteger{#1}
     {\mkbibordedition{#1}~\bibstring{edition}}
@@ -109,14 +110,14 @@
      \usebibmacro{crossref:cite}%
      \setunit{\addcomma\space}%
      \printfield{pages}}
-  \newunit
-  \printfield{note}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
     {\printfield{issn}}
     {}%
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \printfield{note}%
   \newunit\newblock
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
@@ -212,9 +213,9 @@
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
   \newunit\newblock
-  \usebibmacro{addendum+pubstate}%
-  \newunit\newblock
   \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
   \newunit\newblock
@@ -300,6 +301,122 @@
   \iftoggle{bbx:isbn}
     {\printfield{isbn}}
     {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \printfield{type}%
+  \newcommaunit
+  \usebibmacro{institution+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+%added 20150828
+\DeclareBibliographyDriver{report}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit*{\addspace}%
+  \printfield{number}%
+  \newunit\newblock
+  \printfield{version}%
+  \newcommaunit\newblock
+  \usebibmacro{institution+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isrn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+%added 20150829
+% - changed order of note and date
+\DeclareBibliographyDriver{misc}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newcommaunit
+  \printlist{language}%
+  \newcommaunit\newblock
+  \usebibmacro{byauthor}%
+  \newcommaunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newcommaunit\newblock
+  \printfield{howpublished}%
+  \newcommaunit\newblock
+  \printfield{type}%
+  \newcommaunit
+  \printfield{version}%
+  \newcommaunit
+  \usebibmacro{organization+location+date}%
   \newunit\newblock
   \usebibmacro{doi+eprint+url}%
   \newunit\newblock
@@ -417,12 +534,12 @@
   \printlist{location}%
   \newcommaunit
   \printfield{edition}%
-  \newcommaunit
-  \usebibmacro{date}%
   \newunit
   \printlist{organization}%
   \newcommaunit*
   \printlist{publisher}%
+  \newcommaunit
+  \usebibmacro{date}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
   {\printfield{isbn}}
@@ -573,6 +690,14 @@
   \printlist{location}%
   \newcommaunit*
   \printfield{edition}%
+  \newcommaunit*
+  \usebibmacro{date}%
+  \newunit}
+
+\renewbibmacro*{institution+location+date}{%
+  \printlist{institution}%
+  \newcommaunit*
+  \printlist{location}%
   \newcommaunit*
   \usebibmacro{date}%
   \newunit}
