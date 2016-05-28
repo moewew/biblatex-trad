@@ -121,9 +121,15 @@ After loading the style you can use all options provided by \sty{biblatex}.
 That means also that all fields of the standard bibliography drivers are available,
 even if they are unknown to the traditional \texttt{.bst} files.
 
-\section{Limitation}
+\section{Limitations}
 
-Up to now the entry types \bibtype{book}, \bibtype{article}, \bibtype{incollection} and \bibtype{thesis} are set up.
+Up to now the entry types \bibtype{book}, \bibtype{article}, \bibtype{incollection}
+and \bibtype{thesis} are set up.
+
+Since the styles are based on \sty{biblatex} standard styles, the fields retain the meaning
+they have in \sty{biblatex} even if that may be at odds with how the traditional \sty{.bst}
+files handle those fields.
+
 
 \section{Revision History}\label{apx:log}
 \begin{changelog}
@@ -131,6 +137,7 @@ Up to now the entry types \bibtype{book}, \bibtype{article}, \bibtype{incollecti
 \item fix issues with new name formats in \sty{biblatex} versions $\geq$~3.3 (\gitissuelink{25})
 \item fix problems with the related mechanism (\gitissuelink{24})
 \item proper support for \bibtype{thesis}-types (\gitissuelink{23})
+\item modify \opt{maxalphanames}/\opt{minalphanames} and \cmd{labelalphaothers} in \sty{trad-alpha} to mirror \sty{alpha} more closely (\gitissuelink{22})
 \end{release}
 
 \begin{release}{0.2}{2012-09-29}
