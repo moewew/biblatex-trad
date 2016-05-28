@@ -239,7 +239,9 @@
   \usebibmacro{in:}%
   \iffieldundef{crossref}
     {\usebibmacro{inproc:crossref:full}}
-    {\usebibmacro{crossref:label}}
+    {\usebibmacro{maintitle+booktitle:noemph}%
+     \setunit{\addspace}%
+     \usebibmacro{crossref:cite}}
   \usebibmacro{chapter+pages}%
   \iffieldundef{crossref}
     {\usebibmacro{inproc:crossref:extra}}
@@ -435,22 +437,12 @@
 %==========================================%
 %==========================================%
 %==========================================%
-
-
 \newbibmacro{crossref:cite}{%
   \printtext[brackets]{%
     \entrydata{\thefield{crossref}}{%
       \usebibmacro{cite}}}}
 
-
 %new-/redefinition of bibmacros
-\newbibmacro*{crossref:label}{%
-  \usebibmacro{maintitle+booktitle:noemph}%
-  \setunit{\addspace}
-  \entrydata
-  {\strfield{crossref}}
-  {\printtext{\mkbibbrackets{\printfield{labelnumber}}}}}
-
 \newbibmacro*{maintitle+booktitle:noemph}{%
   \iffieldundef{maintitle}
   {}
