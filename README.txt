@@ -9,7 +9,7 @@ you can leave bug reports and feature requests at the issue page
 there
 
 ================================================================
-Copyright (c) 2012         Marco Daniel
+Copyright (c) 2012 -- 2015 Marco Daniel
               2016 --      Moritz Wemheuer
 
 This package is released under the terms of the LaTeX Project

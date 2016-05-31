@@ -1,11 +1,11 @@
-%%  Copyright (c) 2012         Marco Daniel
+%%  Copyright (c) 2012 -- 2015 Marco Daniel
 %%                2016 --      Moritz Wemheuer
 %%
 %%  This package is released under the terms of the
 %%  LaTeX Project Public License v1.3c or later
 %%  See http://www.latex-project.org/lppl.txt
 %%
-\ProvidesFile{trad-plain.bbx}[2016/05/27]
+\ProvidesFile{trad-plain.bbx}[2016/05/31]
 
 \RequireBibliographyStyle{trad-standard}
 
@@ -21,20 +21,37 @@
 \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
 \DeclareFieldFormat{shorthandwidth}{\mkbibbrackets{#1}}
 
-\defbibenvironment{bibliography}
-  {\list
-     {\printtext[labelnumberwidth]{%
-        \printfield{prefixnumber}%
-        \printfield{labelnumber}}}
-     {\setlength{\labelwidth}{\labelnumberwidth}%
-      \setlength{\leftmargin}{\labelwidth}%
-      \setlength{\labelsep}{\biblabelsep}%
-      \addtolength{\leftmargin}{\labelsep}%
-      \setlength{\itemsep}{\bibitemsep}%
-      \setlength{\parsep}{\bibparsep}}%
-      \renewcommand*{\makelabel}[1]{\hss##1}}
-  {\endlist}
-  {\item}
+\@ifpackagelater{biblatex}{2016/05/14}{%
+  \defbibenvironment{bibliography}
+    {\list
+       {\printtext[labelnumberwidth]{%
+          \printfield{labelprefix}%
+          \printfield{labelnumber}}}
+       {\setlength{\labelwidth}{\labelnumberwidth}%
+        \setlength{\leftmargin}{\labelwidth}%
+        \setlength{\labelsep}{\biblabelsep}%
+        \addtolength{\leftmargin}{\labelsep}%
+        \setlength{\itemsep}{\bibitemsep}%
+        \setlength{\parsep}{\bibparsep}}%
+        \renewcommand*{\makelabel}[1]{\hss##1}}
+    {\endlist}
+    {\item}%
+}{%
+  \defbibenvironment{bibliography}
+    {\list
+       {\printtext[labelnumberwidth]{%
+          \printfield{prefixnumber}%
+          \printfield{labelnumber}}}
+       {\setlength{\labelwidth}{\labelnumberwidth}%
+        \setlength{\leftmargin}{\labelwidth}%
+        \setlength{\labelsep}{\biblabelsep}%
+        \addtolength{\leftmargin}{\labelsep}%
+        \setlength{\itemsep}{\bibitemsep}%
+        \setlength{\parsep}{\bibparsep}}%
+        \renewcommand*{\makelabel}[1]{\hss##1}}
+    {\endlist}
+    {\item}%
+}
 
 \defbibenvironment{shorthands}
   {\list

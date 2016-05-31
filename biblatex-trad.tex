@@ -87,10 +87,12 @@ The usage of the styles requires the \sty{biblatex} package.
 It is tested with the current version of \sty{biblatex} (at the time of writing that is 3.4).
 Care has been taken to retain backwards compatibility with older versions,
 but please do not expect the styles to work flawlessly with ancient versions of \sty{biblatex}.
+Note also that the style may fail silently with older versions, it need not necessarily emit noisy
+warnings or error messages, the output might just be wrong.
 
 \subsection{License}
 
-Copyright \textcopyright\ 2006--2012 Marco Daniel, 2016 Moritz Wemheuer. Permission is granted to copy, distribute and\slash or modify this software under the terms of the \lppl, version 1.3c.\fnurl{http://www.latex-project.org/lppl.txt}
+Copyright \textcopyright\ 2012--2015 Marco Daniel, 2016 Moritz Wemheuer. Permission is granted to copy, distribute and\slash or modify this software under the terms of the \lppl, version 1.3c.\fnurl{http://www.latex-project.org/lppl.txt}
 
 
 \subsection{Feedback}\label{subsec:int:feb}
@@ -138,6 +140,7 @@ files handle those fields.
 \item fix problems with the related mechanism (\gitissuelink{24})
 \item proper support for \bibtype{thesis}-types (\gitissuelink{23})
 \item modify \opt{maxalphanames}/\opt{minalphanames} and \cmd{labelalphaothers} in \sty{trad-alpha} to mirror \sty{alpha} more closely (\gitissuelink{22})
+\item use \bibfield{labelprefix} instead of \bibfield{prefixnumber}
 \end{release}
 
 \begin{release}{0.2}{2012-09-29}

@@ -21,7 +21,7 @@ The development branch can be downloaded here. I provide a simple `Makefile` whi
 
 Licence
 -------------
-Copyright (c) 2012         Marco Daniel
+Copyright (c) 2012 -- 2015 Marco Daniel
               2016 --      Moritz Wemheuer
 
 This package is released under the terms of the LaTeX Project
