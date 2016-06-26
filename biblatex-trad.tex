@@ -27,7 +27,6 @@
 \MakeAutoQuote*{<}{>}
 
 
-\newcommand*{\biber}{Biber}
 \titlepage{%
   title={The \sty{biblatex-trad} Package},
   subtitle={Traditional bibliography styles for \sty{biblatex}},
@@ -48,14 +47,6 @@
   \textcolor{spot}{\margnotefont Deprecated}}
 \newrobustcmd*{\DeprecatedMark}{%
   \leavevmode\marginpar{\Deprecated}}
-\newrobustcmd*{\BiberOnly}{%
-  \textcolor{spot}{\margnotefont Biber only}}
-\newrobustcmd*{\BiberOnlyMark}{%
-  \leavevmode\marginpar{\BiberOnly}}
-\newrobustcmd*{\BibTeXOnly}{%
-  \textcolor{spot}{\margnotefont BibTeX only}}
-\newrobustcmd*{\BibTeXOnlyMark}{%
-  \leavevmode\marginpar{\BibTeXOnly}}
 \newcommand*{\gitissuelink}[1]{%
   \href{https://github.com/moewew/biblatex-trad/issues/#1}{issue \##1 on github}}
 
@@ -80,7 +71,9 @@ It provides the implementation of the traditional bibliography styles (\sty{plai
 
 \subsection{Motivation}\label{subsec:int:mot}
 
-The package is motivated by a question at \tex{} -- \latex Stack Exchange \enquote{\href{http://tex.stackexchange.com/a/69706/}{How to emulate the traditional BibTeX styles (\sty{plain}, \sty{abbrv}, \sty{unsrt}, \sty{alpha}) as closely as possible with \sty{biblatex}?}}
+The package is motivated by a question at \tex{} -- \latex Stack Exchange
+\enquote{\href{http://tex.stackexchange.com/a/69706/}{How to emulate the traditional BibTeX styles
+(\sty{plain}, \sty{abbrv}, \sty{unsrt}, \sty{alpha}) as closely as possible with \sty{biblatex}?}}
 
 \subsection{Requirements}
 The usage of the styles requires the \sty{biblatex} package.
@@ -89,6 +82,10 @@ Care has been taken to retain backwards compatibility with older versions,
 but please do not expect the styles to work flawlessly with ancient versions of \sty{biblatex}.
 Note also that the style may fail silently with older versions, it need not necessarily emit noisy
 warnings or error messages, the output might just be wrong.
+
+Note that in recent versions of \sty{biblatex} the \bibtex backend has been degraded to
+the status of \enquote{fallback backend}.
+Many features of this style will only work properly if you use the default Biber backend.
 
 \subsection{License}
 
@@ -114,7 +111,7 @@ The available styles are listed below.
 
 \item[trad-plain] Implementation of the standard style \sty{plain}
 \item[trad-unsrt] Implementation of the standard style \sty{unsrt}
-\item[trad-alpha] \BiberOnlyMark Implementation of the standard style \sty{alpha}
+\item[trad-alpha] Implementation of the standard style \sty{alpha}
 \item[trad-abbrv] Implementation of the standard style \sty{abbrv}
 
 \end{marglist}
@@ -125,8 +122,9 @@ even if they are unknown to the traditional \texttt{.bst} files.
 
 \section{Limitations}
 
-Up to now the entry types \bibtype{book}, \bibtype{article}, \bibtype{incollection}
-and \bibtype{thesis} are set up.
+Up to now the entry types \bibtype{article}, \bibtype{book}, \bibtype{incollection},
+\bibtype{inproceedings}, \bibtype{online}, \bibtype{proceedings}, \bibtype{thesis},
+\bibtype{report} and \bibtype{unpublished} are set up.
 
 Since the styles are based on \sty{biblatex} standard styles, the fields retain the meaning
 they have in \sty{biblatex} even if that may be at odds with how the traditional \sty{.bst}
@@ -135,7 +133,7 @@ files handle those fields.
 
 \section{Revision History}\label{apx:log}
 \begin{changelog}
-\begin{release}{0.3}{2016-05-27}
+\begin{release}{0.3}{2016-06-26}
 \item fix issues with new name formats in \sty{biblatex} versions $\geq$~3.3 (\gitissuelink{25})
 \item fix problems with the related mechanism (\gitissuelink{24})
 \item proper support for \bibtype{thesis}-types (\gitissuelink{23})
