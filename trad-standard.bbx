@@ -1,5 +1,5 @@
 %%  Copyright (c) 2012 -- 2015 Marco Daniel
-%%                2016 --      Moritz Wemheuer
+%%                2016 -- 2017 Moritz Wemheuer
 %%
 %%  This package is released under the terms of the
 %%  LaTeX Project Public License v1.3c or later
@@ -145,7 +145,9 @@
     test {\iffieldundef{part}}
     and
     test {\iffieldundef{number}}
-  }{}{\newblock}%
+  }
+    {}
+    {\newblock}%
   \usebibmacro{publisher+location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
@@ -299,20 +301,18 @@
     and
     test {\iffieldundef{eventyear}}
   }%
-  {}%
-  {%
-    \newunit\newblock
-    \usebibmacro{event+venue+date}%
-    \newunit\newblock
-  }%
+    {}%
+    {\newunit\newblock
+     \usebibmacro{event+venue+date}%
+     \newunit\newblock}%
   \usebibmacro{byeditor+others}%
   \newcommaunit
   \usebibmacro{book:series+number}%
   \newcommaunit%
   \iffieldundef{maintitle}%
-  {\printfield{volumes}%
-    \newcommaunit}%
-  {}%
+    {\printfield{volumes}%
+     \newcommaunit}%
+    {}%
   \newunit
   \printlist{location}%
   \newcommaunit
@@ -500,20 +500,19 @@
 \newbibmacro*{crossref:label}{%
   \usebibmacro{maintitle+booktitle:noemph}%
   \setunit{\addspace}
-  \entrydata
-  {\strfield{crossref}}
-  {\printtext{\mkbibbrackets{\printfield{labelnumber}}}}}
+  \entrydata{\strfield{crossref}}
+    {\printtext{\mkbibbrackets{\printfield{labelnumber}}}}}
 
 \newbibmacro*{maintitle+booktitle:noemph}{%
   \iffieldundef{maintitle}
-  {}
-  {\usebibmacro{maintitle:noemph}%
-    \newunit\newblock
-    \iffieldundef{volume}
     {}
-    {\printfield{volume}%
-      \printfield{part}%
-      \setunit{\addcolon\space}}}%
+    {\usebibmacro{maintitle:noemph}%
+     \newunit\newblock
+     \iffieldundef{volume}
+       {}
+       {\printfield{volume}%
+        \printfield{part}%
+        \setunit{\addcolon\space}}}%
   \usebibmacro{booktitle:noemph}%
   \newunit}
 
@@ -523,12 +522,12 @@
     and
     test {\iffieldundef{mainsubtitle}}
   }%
-  {}%
-  {\printtext{%
-      \printfield[titlecase]{maintitle}%
-      \setunit{\subtitlepunct}%
-      \printfield[titlecase]{mainsubtitle}}%
-    \newunit}%
+    {}%
+    {\printtext{%
+       \printfield[titlecase]{maintitle}%
+       \setunit{\subtitlepunct}%
+       \printfield[titlecase]{mainsubtitle}}%
+     \newunit}%
   \printfield{maintitleaddon}}
 
 \newbibmacro*{booktitle:noemph}{%
@@ -537,12 +536,12 @@
     and
     test {\iffieldundef{booksubtitle}}
   }%
-  {}%
-  {\printtext{%
-      \printfield[titlecase]{booktitle}%
-      \setunit{\subtitlepunct}%
-      \printfield[titlecase]{booksubtitle}}%
-    \newunit}%
+    {}%
+    {\printtext{%
+       \printfield[titlecase]{booktitle}%
+       \setunit{\subtitlepunct}%
+       \printfield[titlecase]{booksubtitle}}%
+     \newunit}%
   \printfield{booktitleaddon}}
 
 \newbibmacro*{inproc:crossref:full}{%
@@ -557,30 +556,29 @@
     and
     test {\ifnameundef{translator}}
   }%
-  {}%
-  {\usebibmacro{byeditor+others}\newcommaunit}%
+    {}%
+    {\usebibmacro{byeditor+others}\newcommaunit}%
   \usebibmacro{maintitle+booktitle}%
   \newunit
   \usebibmacro{event+venue+date}%
   \newcommaunit
   \iffieldundef{maintitle}%
-  {\printfield{volume}%
-    \printfield{part}%
-    \ifboolexpr{
-      test {\iffieldundef{volume}}
-      and
-      test {\iffieldundef{part}}
-    }%
+    {\printfield{volume}%
+     \printfield{part}%
+     \ifboolexpr{
+       test {\iffieldundef{volume}}
+       and
+       test {\iffieldundef{part}}
+     }%
+       {}%
+       {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
     {}%
-    {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
-  {}%
   \usebibmacro{series+number:emphcond}%
   \newcommaunit%
   \iffieldundef{maintitle}%
-  {\printfield{volumes}%
-    \newcommaunit}%
-  {}%
-}
+    {\printfield{volumes}%
+     \newcommaunit}%
+    {}}
 
 \newbibmacro*{inproc:crossref:extra}{%
   \newcommaunit
@@ -595,8 +593,8 @@
   \usebibmacro{date}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
-  {\printfield{isbn}}
-  {}%
+    {\printfield{isbn}}
+    {}%
   \newunit\newblock
   \usebibmacro{doi+eprint+url}
   \newunit\newblock
@@ -605,34 +603,34 @@
   \usebibmacro{addendum+pubstate}}
 
 \newbibmacro*{inproc:crossref:conditional}{%
-  \entrydata*{\strfield{crossref}}{
+  \entrydata*{\strfield{crossref}}{%
     \iffieldsequal{doi}{saveddoi}
-    {\global\booltrue{bbxtrad:doisequal}}
-    {\global\boolfalse{bbxtrad:doisequal}}
+      {\global\booltrue{bbxtrad:doisequal}}
+      {\global\boolfalse{bbxtrad:doisequal}}
     \iffieldsequal{eprint}{savedeprint}
-    {\global\booltrue{bbxtrad:eprintsequal}}
-    {\global\boolfalse{bbxtrad:eprintsequal}}
+      {\global\booltrue{bbxtrad:eprintsequal}}
+      {\global\boolfalse{bbxtrad:eprintsequal}}
     \iffieldsequal{url}{savedurl}
-    {\global\booltrue{bbxtrad:urlsequal}}
-    {\global\boolfalse{bbxtrad:urlsequal}}
+      {\global\booltrue{bbxtrad:urlsequal}}
+      {\global\boolfalse{bbxtrad:urlsequal}}
     \iffieldsequal{note}{savednote}
-    {\global\booltrue{bbxtrad:notesequal}}
-    {\global\boolfalse{bbxtrad:notesequal}}
+      {\global\booltrue{bbxtrad:notesequal}}
+      {\global\boolfalse{bbxtrad:notesequal}}
     \iffieldsequal{addendum}{savedaddendum}
-    {\global\booltrue{bbxtrad:addendumsequal}}
-    {\global\boolfalse{bbxtrad:addendumsequal}}}
+      {\global\booltrue{bbxtrad:addendumsequal}}
+      {\global\boolfalse{bbxtrad:addendumsequal}}}
   \newunit\newblock
   \iftoggle{bbx:doi}
-  {\ifbool{bbxtrad:doisequal}{}{\printfield{saveddoi}}}
-  {}%
+    {\ifbool{bbxtrad:doisequal}{}{\printfield{saveddoi}}}
+    {}%
   \newunit\newblock
   \iftoggle{bbx:eprint}
-  {\ifbool{bbxtrad:eprintsequal}{}{\usebibmacro{eprint}}}
-  {}%
+    {\ifbool{bbxtrad:eprintsequal}{}{\usebibmacro{eprint}}}
+    {}%
   \newunit\newblock
   \iftoggle{bbx:url}
-  {\ifbool{bbxtrad:urlsequal}{}{\usebibmacro{url+urldate}}}
-  {}%
+    {\ifbool{bbxtrad:urlsequal}{}{\usebibmacro{url+urldate}}}
+    {}%
   \newunit\newblock
   \ifbool{bbxtrad:notesequal}{}{\printfield{note}}%
   \newunit\newblock
@@ -660,22 +658,20 @@
   \printfield{number}%
   \setunit{\addcolon}
   \printfield{pages}%
-  \newcommaunit%
-  \printfield{eid}}%
+  \newcommaunit
+  \printfield{eid}}
 
 
 \renewbibmacro*{byeditor+others}{%
   \ifnameundef{editor}
     {}
-    {%
-    \printnames[byeditor]{editor}%
-    \setunit{\addcomma\space}%
-    \usebibmacro{editorlstr}%
-    \clearname{editor}%
-    \newunit}%
+    {\printnames[byeditor]{editor}%
+     \setunit{\addcomma\space}%
+     \usebibmacro{editorlstr}%
+     \clearname{editor}%
+     \newunit}%
   \usebibmacro{byeditorx}%
-  \usebibmacro{bytranslator+others}
-}
+  \usebibmacro{bytranslator+others}}
 
 
 \newbibmacro*{editorlstr}{%
@@ -684,8 +680,8 @@
     or
     test {\ifandothers{editor}}
   }%
-  {\biblstring{editors}}%
-  {\biblstring{editor}}%
+    {\biblstring{editors}}%
+    {\biblstring{editor}}%
 }
 
 \renewbibmacro*{series+number}{%
@@ -700,33 +696,33 @@
   \ifboolexpr{
     not test {\iffieldundef{volume}}
   }%
-   {\printfield{series}}%
-   {\ifboolexpr{
-       test {\iffieldundef{volume}}
-       and
-       test {\iffieldundef{part}}
-       and
-       test {\iffieldundef{number}}
-       and
-       test {\ifentrytype{book}}
-     }%
-      {\newunit\newblock}%
-      {}%
-    \printfield[noformat]{series}}%
+    {\printfield{series}}%
+    {\ifboolexpr{
+        test {\iffieldundef{volume}}
+        and
+        test {\iffieldundef{part}}
+        and
+        test {\iffieldundef{number}}
+        and
+        test {\ifentrytype{book}}
+      }%
+        {\newunit\newblock}%
+        {}%
+     \printfield[noformat]{series}}%
   \newunit}
 
 \newbibmacro*{book:series+number}{%
   \iffieldundef{maintitle}%
-  {\printfield{volume}%
-    \printfield{part}%
-    \ifboolexpr{
-      test {\iffieldundef{volume}}
-      and
-      test {\iffieldundef{part}}
-    }%
+    {\printfield{volume}%
+     \printfield{part}%
+     \ifboolexpr{
+       test {\iffieldundef{volume}}
+       and
+       test {\iffieldundef{part}}
+     }%
+       {}%
+       {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
     {}%
-    {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
-  {}%
   \usebibmacro{series+number:emphcond}%
   \newunit}
 
