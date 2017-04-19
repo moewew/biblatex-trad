@@ -22,8 +22,8 @@ The development branch can be downloaded here. I provide a simple `Makefile` whi
 Licence
 -------------
 Copyright (c) 2012 -- 2015 Marco Daniel
-              2016 --      Moritz Wemheuer
+              2016 -- 2017 Moritz Wemheuer
 
 This package is released under the terms of the LaTeX Project
-Public License v1.3c or later.
+Public License v1.3c (LPPL-1.3c) or later.
 See http://www.latex-project.org/lppl.txt
