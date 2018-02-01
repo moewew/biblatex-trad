@@ -54,8 +54,8 @@
   \ifinteger{#1}
     {\mkbibordedition{#1}~\bibstring{edition}}
     {\MakeLowercase{#1}~\bibstring{edition}}}
-\DeclareFieldFormat{chapter}{\bibstring{part}~#1}
-\DeclareFieldFormat[article]{pages}{{#1}}
+\DeclareFieldFormat{chapter}{\bibstring{chapter}~#1}
+\DeclareFieldFormat[article]{pages}{#1}
 \DeclareFieldFormat[book,inproceedings,proceedings]{series}{\mkbibemph{#1}}
 \DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
 \DeclareFieldFormat{titlecase}{\MakeTitleCase{#1}}
