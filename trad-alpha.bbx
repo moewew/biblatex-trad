@@ -5,12 +5,12 @@
 %%  LaTeX Project Public License v1.3c or later
 %%  See http://www.latex-project.org/lppl.txt
 %%
-\ProvidesFile{trad-alpha.bbx}[2016/06/26 v0.3 biblatex-trad]
+\ProvidesFile{trad-alpha.bbx}[2018/02/02 v0.4 biblatex-trad alpha bibliograhy style]
 
 \RequireBibliographyStyle{trad-standard}
 
 \ExecuteBibliographyOptions{%
- maxnames   =  99      , % set the maximum number of authors
+ maxnames   =  999     , % set the maximum number of authors
  sorting    =  anyt    , % sorting alphlabel-name-title year
  dateabbrev =  false   , % no short form of dates
  abbreviate =  false   ,
@@ -60,9 +60,7 @@
         \setlength{\parsep}{\bibparsep}}%
         \renewcommand*{\makelabel}[1]{##1\hss}}
     {\endlist}
-    {\item}%
-
-}
+    {\item}}
 
 \defbibenvironment{shorthands}
   {\list
@@ -80,7 +78,20 @@
 \renewbibmacro*{crossref:label}{%
   \entrydata
     {\strfield{crossref}}
-    {\printtext[brackets]{%
-       {\printfield{labelalpha}\printfield{extraalpha}}}}}
+    {\printtext[labelalphawidth]{%
+       \printfield{labelprefix}%
+        \printfield{labelalpha}%
+        \printfield{extraalpha}}}}
+
+\DeclareBibliographyDriver{set}{%
+  \entryset
+    {\ifbool{bbx:subentry}
+       {\printfield[bibentrysetcount]{entrysetcount}%
+        \printunit*{\addnbspace}}
+       {}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{setpageref}%
+  \finentry}
 
 \endinput

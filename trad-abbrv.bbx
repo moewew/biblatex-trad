@@ -5,39 +5,21 @@
 %%  LaTeX Project Public License v1.3c or later
 %%  See http://www.latex-project.org/lppl.txt
 %%
-\ProvidesFile{trad-abbrv.bbx}[2016/06/26 v0.3 biblatex-trad]
+\ProvidesFile{trad-abbrv.bbx}[2018/02/02 v0.4 biblatex-trad abbrv bibliography style]
 
 \RequireBibliographyStyle{trad-standard}
 
 \ExecuteBibliographyOptions{%
- maxnames   =  99      , % set the maximum number of authors
+ maxnames   =  999     , % set the maximum number of authors
  sorting    =  nty     , % sorting name - title - year
  dateabbrev =  true    , % short form of dates
  abbreviate =  false   ,
  labelnumber=  true    ,
 }
 
-\@ifpackagelater{biblatex}{2016/03/01}{%
-  \@ifpackagelater{biblatex}{2016/05/14}{%
-    \DeclareNameFormat{abbrv}{%
-      \usebibmacro{name:given-family}
-        {\namepartfamily}
-        {\namepartgiveni}
-        {\namepartprefixi}
-        {\namepartsuffixi}%
-      \usebibmacro{name:andothers}}}
-   {\DeclareNameFormat{abbrv}{%
-      \nameparts{#1}%
-      \usebibmacro{name:given-family}
-        {\namepartfamily}
-        {\namepartgiveni}
-        {\namepartprefixi}
-        {\namepartsuffixi}%
-      \usebibmacro{name:andothers}}}}
-{\DeclareNameFormat{abbrv}{%
-   \usebibmacro{name:first-last}{#1}{#4}{#6}{#8}%
-   \usebibmacro{name:andothers}}}
-\DeclareNameAlias{default}{abbrv}
+\@ifpackagelater{biblatex}{2016/03/01}
+  {\ExecuteBibliographyOptions{giveninits=true}}
+  {\ExecuteBibliographyOptions{firstinits=true}}
 
 
 \DeclareFieldFormat{bibentrysetcount}{\mkbibparens{\mknumalph{#1}}}
@@ -93,7 +75,7 @@
   \entryset
     {\ifbool{bbx:subentry}
        {\printfield[bibentrysetcount]{entrysetcount}%
-        \setunit*{\addnbspace}}
+        \printunit*{\addnbspace}}
        {}}
     {}%
   \newunit\newblock

@@ -5,7 +5,7 @@
 %%  LaTeX Project Public License v1.3c or later
 %%  See http://www.latex-project.org/lppl.txt
 %%
-\ProvidesFile{trad-standard.bbx}[2016/06/26 v0.3 biblatex-trad]
+\ProvidesFile{trad-standard.bbx}[2018/02/02 v0.4 biblatex-trad base bibliography style]
 %==========================================%
 %==========================================%
 %==========================================%
@@ -14,7 +14,7 @@
 %==========================================%
 %==========================================%
 \providebool{bbx:subentry}
-\DeclareBibliographyOption{subentry}[true]{%
+\DeclareBibliographyOption[boolean]{subentry}[true]{%
   \setbool{bbx:subentry}{#1}}
 \newbool{bbxtrad:doisequal}
 \newbool{bbxtrad:eprintsequal}
@@ -48,7 +48,8 @@
                    {title}{\mkbibemph{#1}}
 
 \DeclareFieldFormat*{number}{\mkbibparens{#1}}
-\DeclareFieldFormat[book,incollection,inproceedings,proceedings]{number}{\biblstring{number}~#1}
+\DeclareFieldFormat[book,incollection,inproceedings,proceedings]
+                   {number}{\biblstring{number}~#1}
 \DeclareFieldFormat[techreport,report]{number}{#1}
 \DeclareFieldFormat{edition}{%
   \ifinteger{#1}
@@ -89,7 +90,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -126,7 +127,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
@@ -177,7 +178,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -199,7 +200,7 @@
   \usebibmacro{series+number}%
   \newcommaunit\newblock
   \usebibmacro{chapter+pages}%
-  \setunit{\addperiod\space}
+  \newunit
   \usebibmacro{publisher+location+date}%
   \newunit\newblock
   \iftoggle{bbx:isbn}
@@ -224,7 +225,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -234,11 +235,11 @@
   \usebibmacro{in:}%
   \iffieldundef{crossref}
     {\usebibmacro{inproc:crossref:full}}
-    {\usebibmacro{crossref:label}}
+    {\usebibmacro{crossref:label}}%
   \usebibmacro{chapter+pages}%
   \iffieldundef{crossref}
     {\usebibmacro{inproc:crossref:extra}}
-    {\usebibmacro{inproc:crossref:conditional}}
+    {\usebibmacro{inproc:crossref:conditional}}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
   \newunit\newblock
@@ -252,7 +253,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -289,7 +290,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{editor+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
@@ -308,10 +309,10 @@
   \usebibmacro{byeditor+others}%
   \newcommaunit
   \usebibmacro{book:series+number}%
-  \newcommaunit%
+  \newcommaunit
   \iffieldundef{maintitle}%
     {\printfield{volumes}%
-     \newcommaunit}%
+     \newcommaunit}
     {}%
   \newunit
   \printlist{location}%
@@ -321,7 +322,7 @@
   \usebibmacro{date}%
   \newunit
   \printlist{organization}%
-  \newcommaunit*
+  \newcommaunit*%
   \printlist{publisher}%
   \newunit
   \usebibmacro{chapter+pages}%
@@ -350,7 +351,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -388,7 +389,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -431,7 +432,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -466,7 +467,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -474,9 +475,9 @@
   \usebibmacro{byauthor}%
   \newunit\newblock
   \printfield{howpublished}%
-  \newcommaunit*
+  \newcommaunit*%
   \printfield{note}%
-  \newcommaunit*
+  \newcommaunit*%
   \usebibmacro{location+date}%
   \newunit\newblock
   \iftoggle{bbx:url}
@@ -499,9 +500,11 @@
 %new-/redefinition of bibmacros
 \newbibmacro*{crossref:label}{%
   \usebibmacro{maintitle+booktitle:noemph}%
-  \setunit{\addspace}
+  \setunit{\addspace}%
   \entrydata{\strfield{crossref}}
-    {\printtext{\mkbibbrackets{\printfield{labelnumber}}}}}
+    {\printtext[labelnumberwidth]{%
+       \printfield{prefixnumber}%
+       \printfield{labelnumber}}}}
 
 \newbibmacro*{maintitle+booktitle:noemph}{%
   \iffieldundef{maintitle}
@@ -574,7 +577,7 @@
        {\setunit{\addspace\bibstring{ofseries}\addspace}}}%
     {}%
   \usebibmacro{series+number:emphcond}%
-  \newcommaunit%
+  \newcommaunit
   \iffieldundef{maintitle}%
     {\printfield{volumes}%
      \newcommaunit}%
@@ -587,7 +590,7 @@
   \printfield{edition}%
   \newunit
   \printlist{organization}%
-  \newcommaunit*
+  \newcommaunit*%
   \printlist{publisher}%
   \newcommaunit
   \usebibmacro{date}%
@@ -735,37 +738,35 @@
 
 \renewbibmacro*{publisher+location+date}{%
   \printlist{publisher}%
-  \newcommaunit*
+  \newcommaunit*%
   \printlist{location}%
-  \newcommaunit*
+  \newcommaunit*%
   \printfield{edition}%
-  \newcommaunit*
+  \newcommaunit*%
   \usebibmacro{date}%
   \newunit}
 
 \renewbibmacro*{institution+location+date}{%
   \printlist{institution}%
-  \newcommaunit*
+  \newcommaunit*%
   \printlist{location}%
-  \newcommaunit*
+  \newcommaunit*%
   \usebibmacro{date}%
   \newunit}
 
 \newbibmacro*{location+date+publisher}{%
   \printlist{location}%
-  \newcommaunit*
+  \newcommaunit*%
   \printfield{edition}%
-  \newcommaunit*
+  \newcommaunit*%
   \usebibmacro{date}%
   \newunit
   \printlist{publisher}}
 
 \newbibmacro*{issue+date-parens}{%
-  \iffieldundef{issue}%
-    {\usebibmacro{date}}%
-    {\printfield{issue}%
-     \newcommaunit*%
-     \usebibmacro{date}}%
+  \printfield{issue}%
+  \newcommaunit*%
+  \usebibmacro{date}%
   \newunit}
 
 

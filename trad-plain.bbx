@@ -5,12 +5,12 @@
 %%  LaTeX Project Public License v1.3c or later
 %%  See http://www.latex-project.org/lppl.txt
 %%
-\ProvidesFile{trad-plain.bbx}[2016/06/26 v0.3 biblatex-trad]
+\ProvidesFile{trad-plain.bbx}[2018/02/02 v0.4 biblatex-trad plain bibliography style]
 
 \RequireBibliographyStyle{trad-standard}
 
 \ExecuteBibliographyOptions{%
- maxnames   =  99      , % set the maximum number of authors
+ maxnames   =  999     , % set the maximum number of authors
  sorting    =  nty     , % sorting name - title - year
  dateabbrev =  false   , % no short form of dates
  abbreviate =  false   ,
@@ -70,7 +70,7 @@
   \entryset
     {\ifbool{bbx:subentry}
        {\printfield[bibentrysetcount]{entrysetcount}%
-        \setunit*{\addnbspace}}
+        \printunit*{\addnbspace}}
        {}}
     {}%
   \newunit\newblock

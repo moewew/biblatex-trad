@@ -4,12 +4,12 @@
 %%  This package is released under the terms of the
 %%  LaTeX Project Public License v1.3c or later
 %%  See http://www.latex-project.org/lppl.txt
-\ProvidesFile{trad-unsrt.bbx}[2016/06/26 v0.3 biblatex-trad]
+\ProvidesFile{trad-unsrt.bbx}[2018/02/02 v0.4 biblatex-trad unsrt bibliography style]
 
 \RequireBibliographyStyle{trad-standard}
 
 \ExecuteBibliographyOptions{%
- maxnames   =  99      , % set the maximum number of authors
+ maxnames   =  999     , % set the maximum number of authors
  sorting    =  none    , % sorting none
  dateabbrev =  false   , % no short form of dates
  abbreviate =  false   ,
@@ -52,7 +52,7 @@
   \entryset
     {\ifbool{bbx:subentry}
        {\printfield[bibentrysetcount]{entrysetcount}%
-        \setunit*{\addnbspace}}
+        \printunit*{\addnbspace}}
        {}}
     {}%
   \newunit\newblock
