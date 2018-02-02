@@ -24,7 +24,7 @@ There is a simple `Makefile` which allows you to install the current development
 Licence
 -------------
 Copyright (c) 2012 -- 2015 Marco Daniel
-              2016 -- 2017 Moritz Wemheuer
+              2016 -- 2018 Moritz Wemheuer
 
 This package is released under the terms of the LaTeX Project
 Public License v1.3c (LPPL-1.3c) or later.
