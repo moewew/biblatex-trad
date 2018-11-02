@@ -1,14 +1,9 @@
-% TEX root = path/to/root_file.tex
-% !TEX program = arara
-% !TEX encoding = utf8
-% !TEX spellcheck = en_GB
-% arara: pdflatex: {synctex: true}
-%: Start Header
 \documentclass{ltxdockit}[2011/03/25]
 \usepackage{btxdockit}
 \usepackage[utf8]{inputenc}
 \usepackage[british]{babel}
 \usepackage[strict]{csquotes}
+\usepackage[useregional]{datetime2}
 \usepackage{libertine}
 \usepackage[scaled=0.8]{beramono}
 \usepackage{microtype}
@@ -34,7 +29,7 @@
   author={Marco Daniel\\Moritz Wemheuer},
   email={},
   revision={0.4a},
-  date={17th February 2018}}
+  date={\DTMDate{2018-02-17}}}
 
 \hypersetup{%
   pdftitle={The biblatex-trad Package},

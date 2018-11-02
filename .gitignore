@@ -32,3 +32,5 @@
 *.xml
 .DS_Store
 *.bcf
+*.zip
+glest/*
