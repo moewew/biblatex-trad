@@ -25,9 +25,9 @@
 \titlepage{%
   title={The \sty{biblatex-trad} Package},
   subtitle={Traditional bibliography styles for \sty{biblatex}},
-  url={},
+  url={https://github.com/moewew/biblatex-trad/},
   author={Marco Daniel\\Moritz Wemheuer},
-  email={},
+  email={mwemheu@posteo.de},
   revision={0.4a},
   date={\DTMDate{2018-02-17}}}
 
@@ -72,7 +72,7 @@ The package is motivated by a question at \tex{} -- \latex Stack Exchange
 
 \subsection{Requirements}
 The use of the styles requires the \sty{biblatex} package.
-It is tested with the current version of \sty{biblatex} (at the time of writing that is 3.10).
+It is tested with the current version of \sty{biblatex} (at the time of writing that is v3.16).
 Care has been taken to retain backwards compatibility with older versions,
 but please do not expect the styles to work flawlessly with ancient versions of \sty{biblatex}.
 Note also that the style may fail silently with older versions, it need not necessarily emit noisy
@@ -128,6 +128,10 @@ files handle those fields.
 
 \section{Revision History}\label{apx:log}
 \begin{changelog}
+\begin{release}{<version>}{<date>}
+\item Synced with \sty{biblatex} v3.16 (2020-12-31)
+\end{release}
+
 \begin{release}{0.4a}{2018-02-17}
 \item Fixed alphabetic labels for names with prefix (\enquote{von} part) (\gitissuelink{34})
 \end{release}

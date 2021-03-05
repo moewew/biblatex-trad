@@ -1,5 +1,5 @@
 %%  Copyright (c) 2012 -- 2015 Marco Daniel
-%%                2016 -- 2018 Moritz Wemheuer
+%%                2016 -- 2021 Moritz Wemheuer
 %%
 %%  This package is released under the terms of the
 %%  LaTeX Project Public License v1.3c or later
@@ -20,8 +20,10 @@
 %==========================================%
 %==========================================%
 \providebool{bbx:subentry}
-\DeclareBibliographyOption[boolean]{subentry}[true]{%
-  \setbool{bbx:subentry}{#1}}
+\ifundef\DeclareBiblatexOption
+  {\DeclareBibliographyOption[boolean]{subentry}[true]}
+  {\DeclareBiblatexOption{global,type,entry}[boolean]{subentry}[true]}
+    {\setbool{bbx:subentry}{#1}}
 \newbool{bbxtrad:doisequal}
 \newbool{bbxtrad:eprintsequal}
 \newbool{bbxtrad:urlsequal}
@@ -33,6 +35,12 @@
 \DeclareNameAlias{author}{default}
 \DeclareNameAlias{editor}{default}
 \DeclareNameAlias{translator}{default}
+
+\ifundef\DeclareNameWrapperAlias
+  {}
+  {\DeclareNameWrapperAlias{author}{default}
+   \DeclareNameWrapperAlias{editor}{default}
+   \DeclareNameWrapperAlias{translator}{default}}
 %==========================================%
 %==========================================%
 %==========================================%
@@ -84,9 +92,8 @@
     {\MakeSentenceCase*{#1}}}
 
 \renewbibmacro*{in:}{%
-  \printtext{%
-    \bibstring{in}%
-    \printunit{\intitlepunct}}}
+  \bibstring{in}%
+  \printunit{\intitlepunct}}
 
 %==========================================%
 %==========================================%
@@ -274,11 +281,7 @@
   \newunit\newblock
   \usebibmacro{date}%
   \newunit\newblock
-  \iftoggle{bbx:eprint}
-    {\usebibmacro{eprint}}
-    {}%
-  \newunit\newblock
-  \usebibmacro{url+urldate}%
+  \usebibmacro{doi+eprint+url}%
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
@@ -486,9 +489,7 @@
   \newcommaunit*%
   \usebibmacro{location+date}%
   \newunit\newblock
-  \iftoggle{bbx:url}
-    {\usebibmacro{url+urldate}}
-    {}%
+  \usebibmacro{doi+eprint+url}%
   \newunit\newblock
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
@@ -735,11 +736,12 @@
   \usebibmacro{series+number:emphcond}%
   \newunit}
 
+\providecommand*{\bibeidpunct}{\addcomma\space}
 \renewbibmacro*{volume+number+eid}{%
   \printfield{volume}%
   \setunit*{\volumenumberdelim}%
   \printfield{number}%
-  \setunit{\addcomma\space}%
+  \setunit{\bibeidpunct}%
   \printfield{eid}}
 
 \renewbibmacro*{publisher+location+date}{%
