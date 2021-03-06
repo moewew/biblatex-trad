@@ -11,6 +11,9 @@ unpackfiles = { }
 installfiles = {"*.cbx", "*.bbx"}
 sourcefiles  = installfiles
 
+typesetfiles = {"biblatex-trad.tex"}
+typesetruns  = 4
+
 checkengines = {"pdftex"}
 checkruns    = 3
 
@@ -19,7 +22,7 @@ function runtest_tasks(name)
 end
 
 -- Release a TDS-style zip
-packtdszip  = true
+packtdszip  = false
 
 
 tagfiles = {"*.bbx", "*.cbx", "*.def", "*.tex", "*.md", "*.sty"}

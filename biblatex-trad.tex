@@ -1,23 +1,161 @@
-\documentclass{ltxdockit}[2011/03/25]
-\usepackage{btxdockit}
+\documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[british]{babel}
 \usepackage[strict]{csquotes}
 \usepackage[useregional]{datetime2}
-\usepackage{libertine}
-\usepackage[scaled=0.8]{beramono}
+\usepackage{libertinus}
+\usepackage[scaled=0.78]{beramono}
 \usepackage{microtype}
-\lstset{basicstyle=\ttfamily,keepspaces=true}
-\KOMAoptions{numbers=noenddot}
-\addtokomafont{paragraph}{\spotcolor}
-\addtokomafont{section}{\spotcolor}
-\addtokomafont{subsection}{\spotcolor}
-\addtokomafont{subsubsection}{\spotcolor}
-\addtokomafont{descriptionlabel}{\spotcolor}
-\pretocmd{\cmd}{\sloppy}{}{}
-\pretocmd{\bibfield}{\sloppy}{}{}
-\pretocmd{\bibtype}{\sloppy}{}{}
+\usepackage{multicol}
+\usepackage{ragged2e}
+\usepackage{btxdockit}
 
+\hypersetup{%
+  colorlinks=true,
+  allcolors=spot,
+  bookmarksopen=false,
+  bookmarksnumbered=false,
+  plainpages=false}
+
+\definecolor{spot}{rgb}{0,0.2,0.6}
+
+\lstset{basicstyle=\ttfamily,keepspaces=true}
+
+\makeatletter
+% this is taken from ltxdockit.cls, which is not loaded
+\newrobustcmd*{\fnurl}[1][]{\hyper@normalise\ltd@fnurl{#1}}
+\def\ltd@fnurl#1#2{\footnote{#1\hyper@linkurl{\Hurl{#2}}{#2}}}
+
+\newrobustcmd*{\email}{\hyper@normalise\ltd@email}
+\def\ltd@email#1{\href{mailto:#1}{#1}}
+
+% title
+\providecommand*{\titlepage}{}
+\providecommand*{\titlefont}{}
+\renewrobustcmd*{\titlepage}[1]{\setkeys{ltd@ttp}{#1}}
+\renewcommand*{\titlefont}{\bfseries}
+\define@key{ltd@ttp}{title}{\def\ltd@title@title{#1}}
+\define@key{ltd@ttp}{subtitle}{\def\ltd@title@subtitle{#1}}
+\define@key{ltd@ttp}{url}{\def\ltd@title@url{#1}}
+\define@key{ltd@ttp}{author}{\def\ltd@title@author{#1}}
+\define@key{ltd@ttp}{email}{\def\ltd@title@email{#1}}
+\define@key{ltd@ttp}{revision}{\def\ltd@title@revision{#1}}
+\define@key{ltd@ttp}{date}{\def\ltd@title@date{#1}}
+
+\providecommand*{\printtitlepage}{}
+\renewrobustcmd*{\printtitlepage}{%
+  \begingroup
+  \centering\titlefont
+  \begingroup\LARGE
+    \ifundef\ltd@title@url
+      {\ltd@title@title}
+      {\href{\ltd@title@url}{\ltd@title@title}}%
+    \par
+  \endgroup
+  \vspace{0.25\baselineskip}
+  \begingroup\large
+    \ltd@title@subtitle\par
+  \endgroup
+  \expandafter\url\expandafter{\ltd@title@url}\par
+  \begin{multicols}{2}
+  \raggedleft
+    \ltd@title@author\par
+    \expandafter\email\expandafter{\ltd@title@email}\par
+  \raggedright
+    Version \ltd@title@revision\par\ltd@title@date
+  \end{multicols}
+  \endgroup}
+
+
+\renewcommand\tableofcontents{%
+    \pdfbookmark[1]{\contentsname}{contents}%
+    \section*{\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+    \@starttoc{toc}%
+    }
+\def\@starttoc#1{%
+  \begingroup
+    \begin{multicols}{2}
+    \makeatletter
+    \RaggedRight
+    \@input{\jobname.#1}%
+    \if@filesw
+      \expandafter\newwrite\csname tf@#1\endcsname
+      \immediate\openout \csname tf@#1\endcsname \jobname.#1\relax
+    \fi
+    \end{multicols}
+    \@nobreakfalse
+  \endgroup}
+
+\let\accentcolour\spotcolor
+
+\newcommand*{\allsectionsfont}{\sffamily\accentcolour}
+
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                     {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                     {2.3ex \@plus.2ex}%
+                                     {\normalfont\Large\bfseries\allsectionsfont}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                       {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                       {1.5ex \@plus .2ex}%
+                                       {\normalfont\large\bfseries\allsectionsfont}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                       {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                       {1.5ex \@plus .2ex}%
+                                       {\normalfont\normalsize\bfseries\allsectionsfont}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                      {3.25ex \@plus1ex \@minus.2ex}%
+                                      {-1em}%
+                                      {\normalfont\normalsize\bfseries\allsectionsfont}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                         {3.25ex \@plus1ex \@minus .2ex}%
+                                         {-1em}%
+                                         {\normalfont\normalsize\bfseries\allsectionsfont}}
+
+% from KOMA-Script
+\newcommand*{\@list@extra}{%
+  \ifdim\parskip>\z@
+    \topsep\z@
+    \parsep\parskip
+    \itemsep\z@
+  \fi
+}
+\appto\@listi{\@list@extra}
+\appto\@listii{\@list@extra}
+\appto\@listiii{\@list@extra}
+\appto\@listiv{\@list@extra}
+\appto\@listv{\@list@extra}
+\appto\@listvi{\@list@extra}
+\makeatother
+
+\newrobustcmd*{\tex}{\TeX}
+\newrobustcmd*{\etex}{\mbox{e-TeX}}
+\newrobustcmd*{\pdftex}{pdf\-\tex}
+\newrobustcmd*{\xetex}{Xe\-\tex}
+\newrobustcmd*{\luatex}{Lua\-\tex}
+\newrobustcmd*{\latex}{\LaTeX}%{La\kern-0.07em TeX}
+\newrobustcmd*{\pdflatex}{pdf\-\latex}
+\newrobustcmd*{\xelatex}{Xe\-\latex}
+\newrobustcmd*{\lualatex}{Lua\-\latex}
+\newrobustcmd*{\miktex}{Mik\-\tex}
+\newrobustcmd*{\texlive}{\tex~live}
+\newrobustcmd*{\bibtex}{Bib\kern-0.07em TeX}
+\newrobustcmd*{\lppl}{\latex{} Project Public License}
+
+\renewcommand*{\verbatimfont}{\ttfamily}
+\renewcommand*{\displayverbfont}{\ttfamily}
+\renewcommand*{\marglistfont}{\accentcolour\sffamily\small}
+\renewcommand*{\margnotefont}{\sffamily\small}
+\renewcommand*{\optionlistfont}{\accentcolour\sffamily\displayverbfont}
+\renewcommand*{\ltxsyntaxfont}{\ttfamily}
+\renewcommand*{\ltxsyntaxlabelfont}{\accentcolour\displayverbfont}
+\renewcommand*{\changelogfont}{\normalfont}
+\renewcommand*{\changeloglabelfont}{\accentcolour\sffamily\bfseries}
+\newcommand*{\stylelistlabelfont}{\accentcolour\sffamily\small}
+\newcommand*{\bibfieldformatfont}{\sffamily}
+\newcommand*{\bibfieldformatlabelfont}{\accentcolour\bibfieldformatfont\small}
 
 \MakeAutoQuote*{<}{>}
 
